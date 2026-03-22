@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "makeavish-skills",
+  "metadata": {
+    "description": "Personal Claude Code skills by makeavish"
+  },
+  "owner": {
+    "name": "makeavish"
+  },
+  "plugins": [
+    {
+      "name": "personal",
+      "description": "Personal skills and utilities",
+      "author": {
+        "name": "makeavish"
+      },
+      "source": "./plugins/personal"
+    }
+  ]
+}

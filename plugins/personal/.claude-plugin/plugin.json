@@ -1,0 +1,10 @@
+{
+  "name": "personal",
+  "version": "1.0.0",
+  "description": "Personal skills and utilities",
+  "author": {
+    "name": "makeavish"
+  },
+  "repository": "https://github.com/makeavish/agent-skills",
+  "license": "MIT"
+}
