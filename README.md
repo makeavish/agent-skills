@@ -1,61 +1,72 @@
 # agent-skills
 
-Personal Claude Code plugin marketplace with custom agent skills.
+Personal Claude Code agent skills for working with OpenAI Codex CLI.
 
-## Setup
+## Available Skills
 
-Add to `~/.claude/settings.json`:
+| Skill | Description |
+|-------|-------------|
+| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection. |
+| [codex-review](plugins/personal/skills/codex-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds). |
 
-```json
-{
-  "extraKnownMarketplaces": {
-    "makeavish-skills": {
-      "source": {
-        "source": "directory",
-        "path": "/path/to/agent-skills"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "personal@makeavish-skills": true
-  }
-}
+## Installation
+
+### Claude Code
+
+```sh
+/plugin marketplace add makeavish/agent-skills
+/plugin install personal@makeavish-skills
 ```
 
-Then run `/reload-plugins` in Claude Code.
+To update after new releases:
 
-## Skills
-
-### `/codex-review`
-
-Iterative plan review between Claude and OpenAI Codex CLI. Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves — up to 5 rounds.
-
-**Flow:**
-1. Asks for Codex model and reasoning effort (single `AskUserQuestion`)
-2. Writes current plan to a temp file
-3. Runs `codex exec` in read-only sandbox
-4. Presents Codex's feedback; if `VERDICT: REVISE`, Claude revises and re-submits via session resume
-5. Continues until `VERDICT: APPROVED` or 5 rounds reached
-6. Cleans up temp files
-
-**Models:** `gpt-5.4`, `gpt-5.3-codex-spark`, `gpt-5.3-codex`
-**Effort:** `xhigh`, `high`, `medium`, `low`
-
-Requires [Codex CLI](https://github.com/openai/codex): `npm install -g @openai/codex`
-
-## Structure
-
+```sh
+/plugin marketplace update
+/plugin update personal@makeavish-skills
 ```
-agent-skills/
+
+## IDs
+
+- **Marketplace ID**: `makeavish-skills`
+- **Plugin ID**: `personal`
+- **Repository**: `makeavish/agent-skills`
+
+## Repository Structure
+
+```text
+.
 ├── .claude-plugin/
 │   └── marketplace.json
-└── plugins/
-    └── personal/
-        ├── .claude-plugin/
-        │   └── plugin.json
-        └── skills/
-            └── <skill-name>/
-                └── SKILL.md
+├── plugins/
+│   └── personal/
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       └── skills/
+│           ├── codex/
+│           │   └── SKILL.md
+│           └── codex-review/
+│               └── SKILL.md
+├── LICENSE
+└── README.md
 ```
 
-To add a new skill: create `plugins/personal/skills/<skill-name>/SKILL.md` with a frontmatter `name`, `description`, and `user_invocable: true`, then run `/reload-plugins`.
+## Adding a New Skill
+
+1. Create `plugins/personal/skills/<skill-name>/SKILL.md`
+2. Add frontmatter with `name`, `description` (controls auto-trigger), and skill instructions
+3. Bump the version in `plugins/personal/.claude-plugin/plugin.json`
+4. Run `/reload-plugins` in Claude Code
+
+```text
+plugins/personal/skills/my-skill/
+└── SKILL.md
+```
+
+Conventions:
+- `name` in frontmatter must exactly match the directory name
+- `description` should explain both what the skill does and when it should trigger
+- Move reference material into `references/` subdirectory when the SKILL.md gets large
+
+## License
+
+MIT. See [LICENSE](./LICENSE).
