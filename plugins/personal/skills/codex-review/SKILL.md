@@ -174,6 +174,27 @@ Round 3: Claude revises → Codex re-reviews (resume session) → APPROVED ✅
 
 Max 5 rounds. Each round preserves Codex's conversation context via session resume.
 
+## Critical Evaluation of Codex Feedback
+
+Codex is a peer, not an authority. Evaluate its review feedback critically before incorporating it into plan revisions.
+
+### Guidelines
+
+- **Trust your own knowledge** when confident. If Codex flags something you know to be correct, don't blindly revise the plan around it — state the disagreement to the user.
+- **Watch for stale knowledge** — Codex may be wrong about recent model names, library versions, API changes, or best practices that evolved after its training cutoff. Verify before revising.
+- **Don't treat every REVISE as correct** — if Codex's concern is based on a false premise, note it to the user and skip that revision rather than degrading the plan.
+
+### When Codex Feedback Seems Wrong
+
+1. State the disagreement clearly to the user before revising
+2. If warranted, push back via session resume — **identify yourself as Claude**:
+   ```bash
+   echo "This is Claude (<your current model name>) following up. I disagree with [X] because [evidence]. What's your take?" \
+     | codex exec --skip-git-repo-check resume ${CODEX_SESSION_ID} 2>/dev/null | tail -80
+   ```
+3. Frame it as peer discussion, not a correction — either AI could be wrong
+4. Let the user decide how to proceed if there's genuine ambiguity
+
 ## Rules
 
 - Claude **actively revises the plan** based on Codex feedback between rounds — this is NOT just passing messages, Claude should make real improvements
