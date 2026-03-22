@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Claude Code agent skills for working with OpenAI Codex CLI.
+Personal Claude Code agent skills for working with OpenAI Codex CLI and Google Gemini CLI.
 
 ## Available Skills
 
@@ -8,6 +8,7 @@ Personal Claude Code agent skills for working with OpenAI Codex CLI.
 |-------|-------------|
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection. |
 | [codex-review](plugins/personal/skills/codex-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds). |
+| [gemini-cli](plugins/personal/skills/gemini-cli/SKILL.md) | General-purpose Gemini CLI runner — code analysis, refactoring, and automated editing with model/approval-mode/sandbox selection. |
 
 ## Installation
 
@@ -44,7 +45,9 @@ To update after new releases:
 │       └── skills/
 │           ├── codex/
 │           │   └── SKILL.md
-│           └── codex-review/
+│           ├── codex-review/
+│           │   └── SKILL.md
+│           └── gemini-cli/
 │               └── SKILL.md
 ├── LICENSE
 └── README.md
