@@ -12,6 +12,22 @@ Personal Claude Code agent skills for working with OpenAI Codex CLI and Google G
 
 ## Installation
 
+### skills.sh
+
+Install all skills:
+
+```sh
+npx skills add makeavish/agent-skills
+```
+
+Install individual skills:
+
+```sh
+npx skills add makeavish/agent-skills --skill codex
+npx skills add makeavish/agent-skills --skill codex-review
+npx skills add makeavish/agent-skills --skill gemini-cli
+```
+
 ### Claude Code
 
 ```sh
