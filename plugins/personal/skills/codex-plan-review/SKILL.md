@@ -1,6 +1,6 @@
 ---
-name: codex-review
-description: Send the current plan to OpenAI Codex CLI for iterative review. Claude and Codex go back-and-forth until Codex approves the plan.
+name: codex-plan-review
+description: Send the current implementation plan to OpenAI Codex CLI for iterative review. Use when the user wants a Codex second opinion on a plan, architecture, or implementation approach. Do not use this for code diff review or file-change review. Claude and Codex go back-and-forth until Codex approves the plan.
 user_invocable: true
 ---
 
@@ -12,7 +12,7 @@ Send the current implementation plan to OpenAI Codex for review. Claude revises 
 
 ## When to Invoke
 
-- When the user runs `/codex-review` during or after plan mode
+- When the user runs `/codex-plan-review` during or after plan mode
 - When the user wants a second opinion on a plan from a different model
 
 ## Agent Instructions
@@ -21,12 +21,13 @@ When invoked, perform the following iterative review loop:
 
 ### Step 1: Ask for Model & Reasoning Effort
 
-Use `AskUserQuestion` to ask **both questions in a single prompt**:
+Use `AskUserQuestion` to ask **all three questions in a single prompt**:
 
-> Which Codex model should I use for this review (`gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`)? And what reasoning effort (`xhigh`, `high`, `medium`, or `low`)?
+> Which Codex model should I use for this review (`gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`)? What reasoning effort (`xhigh`, `high`, `medium`, or `low`) should I use? And should I enable Codex fast mode for this review?
 
-- If the user already specified a model as an argument (e.g., `/codex-review o4-mini`), skip this step and default reasoning effort to `high`.
-- Store the answers as `CODEX_MODEL` and `CODEX_EFFORT` for use in all subsequent `codex exec` calls.
+- If the user already specified a model as an argument, keep it. If the user already explicitly asked for fast mode, set `CODEX_FAST_MODE=true` without asking that part again. If the user specified neither reasoning effort nor fast mode, default to `high` effort and `CODEX_FAST_MODE=false`.
+- Store the answers as `CODEX_MODEL`, `CODEX_EFFORT`, and `CODEX_FAST_MODE` for use in all subsequent `codex exec` calls.
+- Build `FAST_MODE_FLAG="--enable fast_mode"` when `CODEX_FAST_MODE=true`; otherwise leave it empty.
 
 ### Step 2: Generate Session ID
 
@@ -36,7 +37,7 @@ Generate a unique ID to avoid conflicts with other concurrent Claude Code sessio
 REVIEW_ID=$(uuidgen | tr '[:upper:]' '[:lower:]' | head -c 8)
 ```
 
-Use this for all temp file paths: `/tmp/claude-plan-${REVIEW_ID}.md` and `/tmp/codex-review-${REVIEW_ID}.md`.
+Use this for all temp file paths: `/tmp/claude-plan-${REVIEW_ID}.md` and `/tmp/codex-plan-review-${REVIEW_ID}.md`.
 
 ### Step 3: Capture the Plan
 
@@ -52,10 +53,11 @@ Run Codex CLI in non-interactive mode to review the plan:
 ```bash
 codex exec \
   --skip-git-repo-check \
+  ${FAST_MODE_FLAG} \
   -m ${CODEX_MODEL} \
   --config model_reasoning_effort="${CODEX_EFFORT}" \
   -s read-only \
-  -o /tmp/codex-review-${REVIEW_ID}.md \
+  -o /tmp/codex-plan-review-${REVIEW_ID}.md \
   "Review the implementation plan in /tmp/claude-plan-${REVIEW_ID}.md. Focus on:
 1. Correctness - Will this plan achieve the stated goals?
 2. Risks - What could go wrong? Edge cases? Data loss?
@@ -78,13 +80,19 @@ If changes are needed, end with exactly: VERDICT: REVISE" 2>/dev/null
 
 ### Step 5: Read Review & Check Verdict
 
-1. Read `/tmp/codex-review-${REVIEW_ID}.md`
+1. Read `/tmp/codex-plan-review-${REVIEW_ID}.md`
 2. Present Codex's review to the user:
 
 ```
 ## Codex Review — Round N (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT})
 
 [Codex's feedback here]
+```
+
+If fast mode is enabled, include it in the heading, for example:
+
+```
+## Codex Review — Round N (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT}, fast mode: on)
 ```
 
 3. Check the verdict:
@@ -119,21 +127,21 @@ Here's what I changed:
 
 Please re-review. If the plan is now solid and ready to implement, end with: VERDICT: APPROVED
 If more changes are needed, end with: VERDICT: REVISE" \
-  | codex exec --skip-git-repo-check resume ${CODEX_SESSION_ID} 2>/dev/null | tail -80
+  | codex exec --skip-git-repo-check ${FAST_MODE_FLAG} resume -o /tmp/codex-plan-review-${REVIEW_ID}.md ${CODEX_SESSION_ID} 2>/dev/null
 ```
 
-**Note:** `codex exec resume` does NOT support `-o` flag. Capture output from stdout instead (pipe through `tail` to skip startup lines). Read the Codex response directly from the command output.
+**Note:** `codex exec resume` supports `-o` in current Codex CLI builds. Reuse `/tmp/codex-plan-review-${REVIEW_ID}.md` so every round is captured consistently, then read that file in Step 5.
 
 Then go back to **Step 5** (Read Review & Check Verdict).
 
-**Important:** If `resume ${CODEX_SESSION_ID}` fails (e.g., session expired), fall back to a fresh `codex exec` call (with `--skip-git-repo-check -m ${CODEX_MODEL} --config model_reasoning_effort="${CODEX_EFFORT}"`) including context about the prior rounds in the prompt.
+**Important:** If `resume ${CODEX_SESSION_ID}` fails (e.g., session expired), fall back to a fresh `codex exec` call (with `--skip-git-repo-check ${FAST_MODE_FLAG} -m ${CODEX_MODEL} --config model_reasoning_effort="${CODEX_EFFORT}"`) including context about the prior rounds in the prompt.
 
 ### Step 8: Present Final Result
 
 Once approved (or max rounds reached):
 
 ```
-## Codex Review — Final (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT})
+## Codex Review — Final (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT}, fast mode: ${CODEX_FAST_MODE})
 
 **Status:** ✅ Approved after N round(s)
 
@@ -146,7 +154,7 @@ Once approved (or max rounds reached):
 If max rounds were reached without approval:
 
 ```
-## Codex Review — Final (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT})
+## Codex Review — Final (model: ${CODEX_MODEL}, effort: ${CODEX_EFFORT}, fast mode: ${CODEX_FAST_MODE})
 
 **Status:** ⚠️ Max rounds (5) reached — not fully approved
 
@@ -161,7 +169,7 @@ If max rounds were reached without approval:
 
 Remove the session-scoped temporary files:
 ```bash
-rm -f /tmp/claude-plan-${REVIEW_ID}.md /tmp/codex-review-${REVIEW_ID}.md
+rm -f /tmp/claude-plan-${REVIEW_ID}.md /tmp/codex-plan-review-${REVIEW_ID}.md
 ```
 
 ## Loop Summary
@@ -190,7 +198,7 @@ Codex is a peer, not an authority. Evaluate its review feedback critically befor
 2. If warranted, push back via session resume — **identify yourself as Claude**:
    ```bash
    echo "This is Claude (<your current model name>) following up. I disagree with [X] because [evidence]. What's your take?" \
-     | codex exec --skip-git-repo-check resume ${CODEX_SESSION_ID} 2>/dev/null | tail -80
+     | codex exec --skip-git-repo-check ${FAST_MODE_FLAG} resume -o /tmp/codex-plan-review-${REVIEW_ID}.md ${CODEX_SESSION_ID} 2>/dev/null
    ```
 3. Frame it as peer discussion, not a correction — either AI could be wrong
 4. Let the user decide how to proceed if there's genuine ambiguity
@@ -198,10 +206,12 @@ Codex is a peer, not an authority. Evaluate its review feedback critically befor
 ## Rules
 
 - Claude **actively revises the plan** based on Codex feedback between rounds — this is NOT just passing messages, Claude should make real improvements
-- Always ask for model and reasoning effort via `AskUserQuestion` (single prompt, two questions) unless the user already provided a model as an argument
+- Always ask for model, reasoning effort, and fast mode via `AskUserQuestion` (single prompt, three questions) unless the user already provided some or all of them
 - Always use `--skip-git-repo-check` and `2>/dev/null` on all `codex exec` calls
+- When fast mode is selected, include `--enable fast_mode` on the initial review, every resume call, and any fallback fresh run
 - Always use read-only sandbox mode — Codex should never write files
 - Max 5 review rounds to prevent infinite loops
 - Show the user each round's feedback and revisions so they can follow along
 - If Codex CLI is not installed or fails, inform the user and suggest `npm install -g @openai/codex`
+- If fast mode is requested but unsupported by the installed Codex CLI, tell the user and suggest upgrading `@openai/codex` or continuing without fast mode
 - If a revision contradicts the user's explicit requirements, skip that revision and note it for the user

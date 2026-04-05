@@ -7,7 +7,7 @@ Personal Claude Code agent skills for working with OpenAI Codex CLI, Google Gemi
 | Skill | Description |
 |-------|-------------|
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection. |
-| [codex-review](plugins/personal/skills/codex-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds). |
+| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds). |
 | [gemini-cli](plugins/personal/skills/gemini-cli/SKILL.md) | General-purpose Gemini CLI runner — code analysis, refactoring, and automated editing with model/approval-mode/sandbox selection. |
 | [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
 
@@ -25,7 +25,7 @@ Install individual skills:
 
 ```sh
 npx skills add makeavish/agent-skills --skill codex
-npx skills add makeavish/agent-skills --skill codex-review
+npx skills add makeavish/agent-skills --skill codex-plan-review
 npx skills add makeavish/agent-skills --skill gemini-cli
 npx skills add makeavish/agent-skills --skill kilocode-cli
 ```
@@ -63,7 +63,7 @@ To update after new releases:
 │       └── skills/
 │           ├── codex/
 │           │   └── SKILL.md
-│           ├── codex-review/
+│           ├── codex-plan-review/
 │           │   └── SKILL.md
 │           ├── gemini-cli/
 │           │   └── SKILL.md
