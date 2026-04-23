@@ -6,7 +6,7 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume),
 # Codex Skill Guide
 
 ## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`), which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
+1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.5`, `gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`), which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
 2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
 3. Store the user's fast-mode choice as `CODEX_FAST_MODE`. When it is enabled, add `--enable fast_mode` to every `codex exec` or `codex exec resume` command for this workflow.
 4. Assemble the command with the appropriate options:

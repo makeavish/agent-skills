@@ -6,8 +6,8 @@ Personal Claude Code agent skills for working with OpenAI Codex CLI, Google Gemi
 
 | Skill | Description |
 |-------|-------------|
-| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection. |
-| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds). |
+| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection, including `gpt-5.5`. |
+| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), including `gpt-5.5` as a model option. |
 | [gemini-cli](plugins/personal/skills/gemini-cli/SKILL.md) | General-purpose Gemini CLI runner — code analysis, refactoring, and automated editing with model/approval-mode/sandbox selection. |
 | [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
 

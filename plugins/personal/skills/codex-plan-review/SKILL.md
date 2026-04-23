@@ -23,7 +23,7 @@ When invoked, perform the following iterative review loop:
 
 Use `AskUserQuestion` to ask **all three questions in a single prompt**:
 
-> Which Codex model should I use for this review (`gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`)? What reasoning effort (`xhigh`, `high`, `medium`, or `low`) should I use? And should I enable Codex fast mode for this review?
+> Which Codex model should I use for this review (`gpt-5.5`, `gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`)? What reasoning effort (`xhigh`, `high`, `medium`, or `low`) should I use? And should I enable Codex fast mode for this review?
 
 - If the user already specified a model as an argument, keep it. If the user already explicitly asked for fast mode, set `CODEX_FAST_MODE=true` without asking that part again. If the user specified neither reasoning effort nor fast mode, default to `high` effort and `CODEX_FAST_MODE=false`.
 - Store the answers as `CODEX_MODEL`, `CODEX_EFFORT`, and `CODEX_FAST_MODE` for use in all subsequent `codex exec` calls.
