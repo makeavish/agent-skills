@@ -11,32 +11,33 @@ description: Use when the user asks to run Antigravity CLI (the agy command, agy
 
 Before running any Antigravity command, verify the CLI is installed and authenticated:
 
-1. Run `agy --version` to confirm installation. If that flag is unrecognized on the installed build, run `agy --help` to confirm the binary exists and discover the exact version syntax. If `agy` is missing, suggest installing it:
+1. Run `agy --version` to confirm installation (it prints the bare version, e.g. `1.0.10`). If `agy` is missing, suggest installing it:
    - **macOS / Linux:** `curl -fsSL https://antigravity.google/cli/install.sh | bash`
    - **Windows (PowerShell):** `irm https://antigravity.google/cli/install.ps1 | iex`
 
-   `agy` is a self-contained Go-native binary that self-updates in the background (if your build supports it, `agy update` forces an update — confirm available subcommands with `agy --help`). There is **no confirmed npm / Homebrew / apt package** — the install script is the only verified distribution channel, so do not suggest `npm install` or `brew install`.
+   `agy` is a self-contained Go-native binary that self-updates in the background (`agy update` forces an update). There is **no npm / Homebrew / apt package** — the install script is the only distribution channel, so do not suggest `npm install` or `brew install`.
 2. Check authentication. Unlike legacy Gemini CLI, Antigravity CLI is **OAuth-first for consumer accounts** — there is no supported `GEMINI_API_KEY` / `GOOGLE_API_KEY` / `ANTIGRAVITY_API_KEY` env var path for AI Pro/Ultra/free users today (it's an open feature request, not a shipped feature). Do not steer users to API-key env vars.
    - **Cached Google login (recommended)** — run `agy` interactively once to complete the OAuth flow (it offers `1. Google OAuth` or `2. Use a Google Cloud project`; OAuth opens a browser and you paste an auth code back). Sign in with the Google account tied to the user's AI Pro / Ultra subscription. There is **no `agy login` / `agy auth` subcommand** — auth triggers automatically when no valid session is cached; sign out with the in-session `/logout` command.
    - **Enterprise / Google Cloud** — choose the "Use a Google Cloud project" option at login; quota then bills against that project. Google's transition announcement says paid Gemini / Gemini Enterprise Agent Platform plans remain supported, but the exact key/credential mechanism isn't clearly documented — have enterprise users confirm the supported flow with their Google Cloud admin rather than assuming a service-account or API-key path works.
    - Credentials are stored in the **OS secure keyring** (macOS Keychain, Windows Credential Manager, Linux freedesktop Secret Service / libsecret), not a plaintext token file, and reused across runs once cached.
 3. In headless mode, `agy -p` reuses the cached keyring credentials. If auth fails, suggest the user run `agy` interactively first to complete OAuth.
-4. **Headless Linux caveat (WSL2 / bare SSH):** the keyring may fail to auto-unlock without a display manager, forcing repeated re-auth. If the user hits this, suggest updating `agy` (e.g. `agy update`, if supported — a fix reportedly landed in an early patch release) and, as a workaround, installing `dbus-x11` / `libsecret` / `gnome-keyring` and unlocking `gnome-keyring-daemon` at shell startup. Over SSH, `agy` prints an auth URL to open on the local machine.
+4. **Headless Linux caveat (WSL2 / bare SSH):** the keyring may fail to auto-unlock without a display manager, forcing repeated re-auth. If the user hits this, suggest updating `agy` (`agy update` — a fix reportedly landed in an early patch release) and, as a workaround, installing `dbus-x11` / `libsecret` / `gnome-keyring` and unlocking `gnome-keyring-daemon` at shell startup. Over SSH, `agy` prints an auth URL to open on the local machine.
 
 ## Running a Task
 
 1. Ask the user (via `AskUserQuestion`) which **model** to run and how much **autonomy** to grant the agent — in a **single prompt with both questions**.
-   - **Model:** default to **`Gemini 3.5 Flash (High)`** (the CLI default — fast and capable). Offer **`Gemini 3.1 Pro (High)`** for deeper reasoning on hard tasks, and note that **`Claude Sonnet 4.6 (Thinking)`**, **`Claude Opus 4.6 (Thinking)`**, and **`GPT-OSS 120B (Medium)`** are also selectable — Antigravity is not Gemini-only. Pass the **friendly label** to `--model` (e.g. `--model "Gemini 3.1 Pro (High)"`).
+   - **Model:** a solid default is **`Gemini 3.5 Flash (High)`** (fast and capable). Offer **`Gemini 3.1 Pro (High)`** for deeper reasoning on hard tasks, and note that **`Claude Sonnet 4.6 (Thinking)`**, **`Claude Opus 4.6 (Thinking)`**, and **`GPT-OSS 120B (Medium)`** are also selectable — Antigravity is not Gemini-only. Run `agy models` to print the exact list of friendly labels on the user's build, then pass the chosen label to `--model` (e.g. `--model "Gemini 3.1 Pro (High)"`). Without `--model`, `agy` uses whatever model is set in `settings.json`.
    - **Autonomy:** for **read-only review/analysis**, run a plain `agy -p` (no skip flag needed). For tasks that **edit files or run commands**, headless mode cannot answer interactive permission prompts, so pass `--dangerously-skip-permissions` (the replacement for the old `--yolo`). Pair it with `--sandbox` whenever possible, especially in untrusted repos.
 2. Assemble the command with the appropriate options:
-   - `--model "<FRIENDLY LABEL>"` (model selection; a short `-m` alias is **not** confirmed, so use the long form)
-   - `-p, --prompt "<your prompt here>"` (also `--print`) — non-interactive / headless mode
+   - `--model "<FRIENDLY LABEL>"` (model selection — there is **no `-m` short alias**, use the long form)
+   - `-p, --prompt "<your prompt here>"` (also `--print`; `-p` is the short alias for `--print`) — non-interactive / headless mode
    - `--dangerously-skip-permissions` (auto-approve all tool/edit permissions; required for autonomous edits in headless mode — there is **no `--yolo` and no `--approval-mode` launch flag** in `agy`)
-   - `--sandbox` (run the session with terminal restrictions; a short `-s` alias is **not** confirmed)
+   - `--sandbox` (run the session with terminal restrictions; there is **no `-s` short alias**)
    - `--add-dir <DIR>` (repeatable — extend the workspace beyond cwd; closest equivalent to the old `--include-directories`)
    - `--continue` / `-c` (resume the most recent conversation) or `--conversation <ID>` (resume a specific one) — see [Following Up](#following-up)
+   - `--print-timeout <DURATION>` (optional — caps how long `-p` waits for a response; default `5m0s`. In scripts, set a shorter value like `--print-timeout 90s` to avoid a long hang.)
 3. **Working Directory:** Antigravity CLI has **no `-C` flag**. Run `agy` from the target repository's directory (use `cd <target-dir> &&` before the command), or extend the workspace with `--add-dir <DIR>`.
-4. **Output format:** there is **no working JSON output flag.** `--output-format json` currently errors out (`flags provided but not defined`) — headless output is **plain text only**. Do not pass `--output-format` / `--format` / `-o`; capture and parse the plain-text stdout instead. (Google's codelab shows a JSON example, but it does not work on shipped builds — re-check with `agy --help` before assuming otherwise.)
+4. **Output format:** there is **no JSON output flag** — headless output is **plain text only**. Passing `--output-format json` (or `--json` / `-o`) errors with `flags provided but not defined: -output-format` and dumps the usage text (verified on v1.0.10). Capture and parse the plain-text stdout instead. (Google's codelab shows a JSON example, but it does not work on shipped builds.)
 5. **Stderr Handling:** Do NOT append `2>/dev/null` by default. `agy` may emit auth errors, sandbox failures, and tool-execution errors to stderr in headless mode. Only suppress stderr if the user explicitly requests it or after confirming it contains only UI artifacts.
 6. Run the command, capture stdout, and summarize the outcome for the user.
 7. **After `agy` completes**, inform the user they can resume the conversation (`agy --continue` / `agy --conversation <id>`) or start another task at any time.
@@ -66,7 +67,7 @@ Before running any Antigravity command, verify the CLI is installed and authenti
 | Resume most recent conversation | `--continue` / `-c` |
 | Resume a specific conversation | `--conversation <ID>` |
 
-> **Flags that do NOT exist in `agy`** (carried over from Gemini CLI muscle memory or hallucinated by third-party blogs — do not use): `--yolo`, `--approval-mode`, `--checkpointing`, `--output-format json`, `-C`, `--include-directories`, an `agy run` subcommand, `--prompt-file`, `--yes`. When in doubt, confirm against `agy --help` on the installed version.
+> **Flags that do NOT exist in `agy`** (carried over from Gemini CLI muscle memory or hallucinated by third-party blogs — do not use): `--yolo`, `--approval-mode`, `--checkpointing`, `--output-format json`, `-C`, `--include-directories`, an `agy run` subcommand, `--prompt-file`, `--yes`. This list and the supported flags above were verified against `agy --help` on **v1.0.10**; when in doubt, re-check `agy --help` on the installed version. The full subcommand set is `changelog`, `help`, `install`, `models`, `plugin`/`plugins`, and `update` — note there is **no `login`/`auth` subcommand** (auth is automatic).
 
 ## Workspace Security
 
@@ -86,7 +87,7 @@ Before running any Antigravity command, verify the CLI is installed and authenti
 
 If the user is moving an existing Gemini CLI setup over, note what Antigravity handles automatically vs. manually:
 
-- **Auto-migrated on first launch:** Extensions become **Antigravity plugins** (convert Gemini extensions with a command reported as `agy plugin import gemini` — confirm the exact syntax via `agy --help`); session tokens move into the OS keyring; visual settings are mapped. `GEMINI.md` / `AGENTS.md` are read unchanged.
+- **Auto-migrated on first launch:** Extensions become **Antigravity plugins** (convert Gemini extensions with `agy plugin import gemini` — `agy plugin import` also accepts `claude` as a source); session tokens move into the OS keyring; visual settings are mapped. `GEMINI.md` / `AGENTS.md` are read unchanged.
 - **Manual step — workspace skills:** move them from `.gemini/skills/` → `.agents/skills/` (global shared skills go in `~/.gemini/antigravity-cli/skills/`).
 - **Manual step — MCP config:** MCP servers move out of `~/.gemini/settings.json` into a dedicated `mcp_config.json` (global `~/.gemini/config/mcp_config.json`, workspace `.agents/mcp_config.json`), and the remote-server key is **renamed `url` / `httpUrl` → `serverUrl`**.
 - Antigravity retains Agent Skills, Hooks (JSON lifecycle interceptors), and Subagents from Gemini CLI.
