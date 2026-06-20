@@ -1,14 +1,14 @@
 # agent-skills
 
-Personal Claude Code agent skills for working with OpenAI Codex CLI, Google Gemini CLI, and Kilo Code CLI.
+Personal Claude Code agent skills for working with OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
 
 ## Available Skills
 
 | Skill | Description |
 |-------|-------------|
+| [antigravity-cli](plugins/personal/skills/antigravity-cli/SKILL.md) | General-purpose Antigravity CLI runner (`agy`, Google's successor to Gemini CLI) — code analysis, refactoring, and automated editing with model/autonomy/sandbox selection. |
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection, including `gpt-5.5`. |
 | [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), including `gpt-5.5` as a model option. |
-| [gemini-cli](plugins/personal/skills/gemini-cli/SKILL.md) | General-purpose Gemini CLI runner — code analysis, refactoring, and automated editing with model/approval-mode/sandbox selection. |
 | [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
 
 ## Installation
@@ -24,9 +24,9 @@ npx skills add makeavish/agent-skills
 Install individual skills:
 
 ```sh
+npx skills add makeavish/agent-skills --skill antigravity-cli
 npx skills add makeavish/agent-skills --skill codex
 npx skills add makeavish/agent-skills --skill codex-plan-review
-npx skills add makeavish/agent-skills --skill gemini-cli
 npx skills add makeavish/agent-skills --skill kilocode-cli
 ```
 
@@ -61,11 +61,11 @@ To update after new releases:
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       └── skills/
+│           ├── antigravity-cli/
+│           │   └── SKILL.md
 │           ├── codex/
 │           │   └── SKILL.md
 │           ├── codex-plan-review/
-│           │   └── SKILL.md
-│           ├── gemini-cli/
 │           │   └── SKILL.md
 │           └── kilocode-cli/
 │               └── SKILL.md
