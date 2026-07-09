@@ -6,12 +6,14 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume),
 # Codex Skill Guide
 
 ## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.5`, `gpt-5.4`, `gpt-5.3-codex-spark`, or `gpt-5.3-codex`), which reasoning effort to use (`xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
+1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`), which reasoning effort to use (`ultra`, `xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
+   - Models, most → least capable: `gpt-5.6-sol` (flagship), `gpt-5.6-terra` (balanced), `gpt-5.6-luna` (fastest/lightest).
+   - The `ultra` reasoning effort is the top tier and is only supported by `gpt-5.6-sol` and `gpt-5.6-terra`; `gpt-5.6-luna` tops out at `xhigh`. Don't pair `ultra` with `luna`.
 2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
 3. Store the user's fast-mode choice as `CODEX_FAST_MODE`. When it is enabled, add `--enable fast_mode` to every `codex exec` or `codex exec resume` command for this workflow.
 4. Assemble the command with the appropriate options:
    - `-m, --model <MODEL>`
-   - `--config model_reasoning_effort="<xhigh|high|medium|low>"`
+   - `--config model_reasoning_effort="<ultra|xhigh|high|medium|low>"` (`ultra` only with `gpt-5.6-sol` or `gpt-5.6-terra`)
    - `--sandbox <read-only|workspace-write|danger-full-access>`
    - `--enable fast_mode` (optional, when `CODEX_FAST_MODE=true`)
    - `--full-auto`
