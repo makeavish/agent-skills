@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Claude Code agent skills for working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
+Personal Codex and Claude Code agent skills for working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
 
 ## Available Skills
 
@@ -46,9 +46,19 @@ To update after new releases:
 /plugin update personal@makeavish-skills
 ```
 
+### Codex
+
+Add this repository as a Codex plugin marketplace, then install the plugin:
+
+```sh
+codex plugin marketplace add makeavish/agent-skills
+codex plugin add personal@makeavish-skills
+```
+
 ## IDs
 
-- **Marketplace ID**: `makeavish-skills`
+- **Claude Marketplace ID**: `makeavish-skills`
+- **Codex Marketplace ID**: `makeavish-skills`
 - **Plugin ID**: `personal`
 - **Repository**: `makeavish/agent-skills`
 
@@ -56,11 +66,16 @@ To update after new releases:
 
 ```text
 .
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/
 │   └── personal/
 │       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── .codex-plugin/
 │       │   └── plugin.json
 │       └── skills/
 │           ├── antigravity-cli/
@@ -81,8 +96,10 @@ To update after new releases:
 
 1. Create `plugins/personal/skills/<skill-name>/SKILL.md`
 2. Add frontmatter with `name`, `description` (controls auto-trigger), and skill instructions
-3. Bump the version in `plugins/personal/.claude-plugin/plugin.json`
-4. Run `/reload-plugins` in Claude Code
+3. Bump the version in both `plugins/personal/.claude-plugin/plugin.json` and `plugins/personal/.codex-plugin/plugin.json`
+4. Update the skill table and any affected installation or structure documentation in this README
+5. Run the Claude and Codex plugin validators
+6. Reload or reinstall the plugin in the target client
 
 ```text
 plugins/personal/skills/my-skill/
