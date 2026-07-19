@@ -21,7 +21,7 @@ Before running any Claude command:
 ## Running a Task
 
 1. Ask the user (via `AskUserQuestion`) which model to run, which effort level to use, which permission mode to use, and whether to run in the current directory or an isolated worktree, in a single prompt with four questions.
-   - **Model:** accept aliases like `sonnet`, `opus`, or `fable`, or full model names. If the user is unsure, default to `sonnet`.
+   - **Model:** accept aliases like `sonnet`, `opus`, or `fable`, or full model names. Default to `opus` when the user does not choose a model. Fable is the most intelligent model, but it is also the most expensive. Before starting multiple Fable instances—whether parallel, background, or batched—tell the user how many instances you plan to run and get explicit confirmation. A request to use Fable for one instance does not authorize additional Fable instances.
    - **Effort:** choose `low`, `medium`, `high`, `xhigh`, or `max`. Default to `medium` for ordinary work and `high` for deep reviews or complex refactors.
    - **Permission mode:** use the least powerful mode that fits the task. Prefer `manual` or `plan` for read-only review/planning, `acceptEdits` for controlled file edits, `auto` only when the user wants more autonomous execution, and `bypassPermissions` only in a trusted sandbox after explicit permission.
    - **Workspace:** run from the target repository directory. Use `--worktree [name]` when the user wants isolation, or `--add-dir <DIR>` when Claude needs access to extra directories.
