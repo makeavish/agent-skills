@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Codex and Claude Code agent skills for working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
+Personal Codex and Claude Code agent skills for writing, plan review, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
 
 ## Available Skills
 
@@ -11,6 +11,7 @@ Personal Codex and Claude Code agent skills for working with Claude Code CLI, Op
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection across the GPT 5.6 lineup (`gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`). |
 | [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT 5.6 model options (`gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`). |
 | [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
+| [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. |
 
 ## Installation
 
@@ -30,6 +31,7 @@ npx skills add makeavish/agent-skills --skill claude-cli
 npx skills add makeavish/agent-skills --skill codex
 npx skills add makeavish/agent-skills --skill codex-plan-review
 npx skills add makeavish/agent-skills --skill kilocode-cli
+npx skills add makeavish/agent-skills --skill writing
 ```
 
 ### Claude Code
@@ -86,7 +88,11 @@ codex plugin add personal@makeavish-skills
 │           │   └── SKILL.md
 │           ├── codex-plan-review/
 │           │   └── SKILL.md
-│           └── kilocode-cli/
+│           ├── kilocode-cli/
+│           │   └── SKILL.md
+│           └── writing/
+│               ├── evals/
+│               │   └── evals.json
 │               └── SKILL.md
 ├── LICENSE
 └── README.md
