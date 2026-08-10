@@ -1,0 +1,71 @@
+{
+  "skill_name": "writing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Rewrite this paragraph for a technical blog aimed at engineers who know Kubernetes but are new to observability. Preserve every factual claim and keep the tone direct, not salesy. Return the rewrite first, followed by at most three brief notes if they are useful.\n\nObservability is something that has become increasingly important in the modern era. It helps teams understand systems. Cardinality is a thing that can cause costs to increase. Cardinality means the number of unique combinations of label values. Teams should pay attention to it. Teams should not remove labels without checking whether dashboards and alerts use them.",
+      "expected_output": "A concise, engaging rewrite that defines cardinality in context, varies sentence structure, preserves the dashboard-and-alert warning, and does not add unsupported claims.",
+      "files": [],
+      "expectations": [
+        "The rewrite appears before any optional editing notes.",
+        "The output preserves every supplied factual relationship: observability helps teams understand systems; cardinality is the number of unique combinations of label values; cardinality can increase costs; and labels should not be removed before checking dashboard and alert usage.",
+        "The output introduces no unsupported mechanism, metric, statistic, or recommendation.",
+        "The rewrite removes the empty phrases 'something that', 'a thing that', and 'modern era'.",
+        "The tone is direct and not salesy."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Polish this first-person fiction paragraph. Keep the facts, first-person viewpoint, and restrained tone, but make the narrator's anxiety felt without naming the emotion. Do not add backstory.\n\nI was anxious while I waited outside the principal's office. I could hear the clock ticking. I felt worried that Mara would not arrive before the meeting. I looked down the hall. She was not there.",
+      "expected_output": "A restrained first-person scene that conveys anxiety by reordering and varying the rhythm of the supplied actions and perceptions, without adding new scene details or backstory.",
+      "files": [],
+      "expectations": [
+        "The rewrite remains in first person and retains the principal's office, ticking clock, Mara's absence, and the approaching meeting.",
+        "The rewrite conveys the narrator's anxiety without using 'anxious', 'anxiety', 'worried', or 'worry'.",
+        "The rewrite adds no backstory or new named character.",
+        "The rewrite uses only actions, perceptions, objects, and setting details already present in the source paragraph.",
+        "The tone remains restrained rather than melodramatic."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Critique the excerpt below for clarity and flow. I am not asking for a full rewrite. Prioritize the three changes that would help a general reader most, explain why, and show a tiny example only where needed.\n\nSince model collapse can affect recursive training, synthetic-data provenance mechanisms matter. These mechanisms matter because models need data. These mechanisms can reduce risk. Data lineage architectures help. Alignment tax considerations also affect adoption, which is an important thing to consider in this context.",
+      "expected_output": "A prioritized critique, not a replacement draft, that identifies unexplained jargon, repetitive sentence structure, weak logical connections, and the ambiguous use of 'since'.",
+      "files": [],
+      "expectations": [
+        "The response provides exactly three prioritized changes and does not replace the excerpt with a full rewrite.",
+        "The critique identifies unexplained jargon and the missing causal connections among provenance, lineage, risk, and adoption.",
+        "The critique identifies the repeated 'These mechanisms' openings and the potentially ambiguous causal use of 'Since'.",
+        "Every quotation and numerical count about the supplied excerpt is exact.",
+        "Any example remains small and uses placeholders rather than inventing technical claims."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Rewrite this for clarity, but keep my dry, slightly irritated voice. Do not make it sound corporate. Keep the spreadsheet joke, the number 47, and every factual detail. Return only the revised paragraph.\n\nWe hold a status meeting every Tuesday, which is a ritual where twelve adults take turns saying that they are blocked by one another, but politely. The spreadsheet watches us. It has 47 columns now, because apparently uncertainty becomes strategy if you give it enough cells.",
+      "expected_output": "A clearer, tighter paragraph that preserves all facts, the spreadsheet joke, and the writer's dry irritation without introducing corporate language.",
+      "files": [],
+      "expectations": [
+        "The rewrite preserves Tuesday, twelve adults, mutual blocking stated politely, the watching spreadsheet, and its 47 columns.",
+        "The spreadsheet joke and dry, slightly irritated voice remain recognizable.",
+        "The output avoids corporate euphemisms and generic professional polish.",
+        "The rewrite is clearer and no longer than the supplied paragraph.",
+        "The response contains only the revised paragraph and introduces no new factual detail."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Turn these notes into a 140-180 word internal engineering announcement for staff engineers. Use a direct, mildly skeptical voice. Lead with the concrete change. Do not add facts, customer claims, or quotations. Return only the draft.\n\nNotes:\n- PR preview environments now create an isolated deployment\n- Internal test covered 12 services\n- Median setup time fell from 18 minutes to 6 minutes\n- 3 services still require manual database seeding\n- Rollout is opt-in next month",
+      "expected_output": "A concise internal announcement that leads with the preview-environment change, preserves every supplied measurement and limitation, avoids unsupported importance claims, and introduces no new facts.",
+      "files": [],
+      "expectations": [
+        "The draft is between 140 and 180 words inclusive.",
+        "The draft preserves every supplied fact exactly: isolated PR preview deployments; 12 tested services; median setup time falling from 18 minutes to 6 minutes; 3 services still requiring manual database seeding; and an opt-in rollout next month.",
+        "The draft introduces no unsupported statistic, mechanism, customer claim, quotation, anecdote, or attribution.",
+        "The opening leads with the concrete preview-environment change rather than generic importance or trend framing.",
+        "The draft avoids stock importance claims and unattributed authority, including 'pivotal moment', 'game changer', 'transformative', and 'experts agree'.",
+        "The response contains only the draft and maintains a direct, mildly skeptical voice."
+      ]
+    }
+  ]
+}

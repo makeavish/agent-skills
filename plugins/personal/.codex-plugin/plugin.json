@@ -1,7 +1,7 @@
 {
   "name": "personal",
-  "version": "1.6.0",
-  "description": "Personal coding-agent CLI skills for Codex",
+  "version": "1.7.0",
+  "description": "Personal writing and coding-agent skills for Codex",
   "author": {
     "name": "makeavish",
     "url": "https://github.com/makeavish"
@@ -17,18 +17,20 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Makeavish Skills",
-    "shortDescription": "Run and coordinate coding-agent CLIs from Codex.",
-    "longDescription": "Skills for using Codex CLI, Claude Code CLI, Antigravity CLI, and Kilo Code CLI for analysis, reviews, refactoring, and automated editing.",
+    "shortDescription": "Write polished prose and coordinate coding-agent CLIs.",
+    "longDescription": "Skills for drafting and revising human-facing prose, plus using Codex CLI, Claude Code CLI, Antigravity CLI, and Kilo Code CLI for analysis, reviews, refactoring, and automated editing.",
     "developerName": "makeavish",
     "category": "Productivity",
     "capabilities": [
       "Code analysis",
       "Plan review",
+      "Prose drafting and revision",
       "Refactoring",
       "Automated editing"
     ],
     "websiteURL": "https://github.com/makeavish/agent-skills",
     "defaultPrompt": [
+      "Rewrite this draft for clarity while preserving my voice.",
       "Use Codex CLI to review this implementation plan.",
       "Run a second-opinion code analysis with Claude Code CLI.",
       "Choose the right coding-agent CLI for this task."
