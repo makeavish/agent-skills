@@ -7,7 +7,7 @@ description: Use when the user asks to run Claude Code CLI (`claude`, `claude -p
 
 Claude Code uses the `claude` binary. Running `claude` by itself starts an interactive session; use `-p` / `--print` for non-interactive terminal output.
 
-This guide was written against `claude --help` on Claude Code `2.1.204`. CLI flags move quickly, so when something behaves unexpectedly, re-check `claude --help` and the relevant subcommand help before assuming the tool or the user's setup is broken.
+Model guidance was checked on 2026-09-16 against the [Claude Code model configuration docs](https://code.claude.com/docs/en/model-config), [Claude model catalog](https://platform.claude.com/docs/en/models/overview), and `claude --help` on Claude Code `2.1.273`. CLI flags move quickly, so when something behaves unexpectedly, re-check `claude --help` and the relevant subcommand help before assuming the tool or the user's setup is broken.
 
 ## Preflight Checks
 
@@ -20,9 +20,9 @@ Before running any Claude command:
 
 ## Running a Task
 
-1. Ask the user (via `AskUserQuestion`) which model to run, which effort level to use, which permission mode to use, and whether to run in the current directory or an isolated worktree, in a single prompt with four questions.
-   - **Model:** accept aliases like `sonnet`, `opus`, or `fable`, or full model names. Default to `opus` when the user does not choose a model. Fable is the most intelligent model, but it is also the most expensive. Before starting multiple Fable instances—whether parallel, background, or batched—tell the user how many instances you plan to run and get explicit confirmation. A request to use Fable for one instance does not authorize additional Fable instances.
-   - **Effort:** choose `low`, `medium`, `high`, `xhigh`, or `max`. Default to `medium` for ordinary work and `high` for deep reviews or complex refactors.
+1. Ask the user (via `AskUserQuestion`) which model to run, which effort level to use, which permission mode to use, and whether to run in the current directory or an isolated worktree, in a single prompt with four questions. Keep choices the user already supplied and ask only for missing ones.
+   - **Model:** accept aliases like `sonnet`, `opus`, or `fable`, or full model names. Default to `opus` when the user does not choose a model. See [Current Models](#current-models) for versioned IDs. Fable is the most intelligent model, but it is also the most expensive. Before starting multiple Fable instances—whether parallel, background, or batched—tell the user how many instances you plan to run and get explicit confirmation. A request to use Fable for one instance does not authorize additional Fable instances.
+   - **Effort:** choose a level supported by the selected model from `low`, `medium`, `high`, `xhigh`, or `max`. This skill defaults to `medium` for ordinary work and `high` for deep reviews or complex refactors; the current Fable, Opus, and Sonnet models default to `high` when no effort override is supplied. Omit `--effort` for Haiku 4.5, which does not support effort.
    - **Permission mode:** use the least powerful mode that fits the task. Prefer `manual` or `plan` for read-only review/planning, `acceptEdits` for controlled file edits, `auto` only when the user wants more autonomous execution, and `bypassPermissions` only in a trusted sandbox after explicit permission.
    - **Workspace:** run from the target repository directory. Use `--worktree [name]` when the user wants isolation, or `--add-dir <DIR>` when Claude needs access to extra directories.
 2. Assemble the command with the appropriate options:
@@ -50,6 +50,17 @@ Before running any Claude command:
 4. Do not suppress stderr by default. Claude may emit authentication, permission, MCP, validation, and tool errors there.
 5. Run the command, capture stdout and stderr, and summarize the result for the user.
 6. After Claude completes, tell the user the session can be continued with `claude --continue -p "..."` or resumed with `claude --resume <session-id> -p "..."` if a specific session ID is available.
+
+### Current Models
+
+| Model | CLI alias | Anthropic API model ID | Use |
+| --- | --- | --- | --- |
+| Claude Fable 5.1 | `fable` | `claude-fable-5-1` | Hardest reasoning and long-running agentic work |
+| Claude Opus 5 | `opus` | `claude-opus-5` | Default for complex coding and reviews |
+| Claude Sonnet 5 | `sonnet` | `claude-sonnet-5` | Faster everyday coding |
+| Claude Haiku 4.5 | `haiku` | `claude-haiku-4-5-20251001` | Small, latency-sensitive tasks |
+
+Aliases can vary by provider or local pins. In Claude apps gateway sessions, `fable` still resolves to Fable 5; use `--model claude-fable-5-1` when that exact release is requested. Fable 5.1 requires Claude Code `2.1.257` or later. For other providers, use their model IDs. Check `/model` for availability rather than silently changing an explicit model choice.
 
 ### Output Handling
 
