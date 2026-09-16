@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Codex and Claude Code agent skills for writing, plan review, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
+Personal Codex and Claude Code agent skills for writing, plan review, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
 
 ## Available Skills
 
@@ -8,6 +8,7 @@ Personal Codex and Claude Code agent skills for writing, plan review, and workin
 |-------|-------------|
 | [antigravity-cli](plugins/personal/skills/antigravity-cli/SKILL.md) | General-purpose Antigravity CLI runner (`agy`, Google's successor to Gemini CLI) — code analysis, refactoring, and automated editing with model/autonomy/sandbox selection. |
 | [claude-cli](plugins/personal/skills/claude-cli/SKILL.md) | General-purpose Claude Code CLI runner (`claude`, `claude -p`) — code analysis, refactoring, reviews, automated editing, background agents, and structured output. Defaults to Opus; multiple Fable instances require explicit cost confirmation. |
+| [chatgpt-pro](plugins/personal/skills/chatgpt-pro/SKILL.md) | Uses GPT-6 Pro through an authenticated ChatGPT browser session, with a durable practical artifact for cross-session continuity and handoff back to Codex. Prefers Helium and can fall back to the Codex in-app browser. |
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection across the GPT 5.6 lineup (`gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`). |
 | [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT 5.6 model options (`gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`). |
 | [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
@@ -28,6 +29,7 @@ Install individual skills:
 ```sh
 npx skills add makeavish/agent-skills --skill antigravity-cli
 npx skills add makeavish/agent-skills --skill claude-cli
+npx skills add makeavish/agent-skills --skill chatgpt-pro
 npx skills add makeavish/agent-skills --skill codex
 npx skills add makeavish/agent-skills --skill codex-plan-review
 npx skills add makeavish/agent-skills --skill kilocode-cli
@@ -83,6 +85,18 @@ codex plugin add personal@makeavish-skills
 │           ├── antigravity-cli/
 │           │   └── SKILL.md
 │           ├── claude-cli/
+│           │   └── SKILL.md
+│           ├── chatgpt-pro/
+│           │   ├── assets/
+│           │   │   └── session-handoff-template.md
+│           │   ├── evals/
+│           │   │   ├── files/
+│           │   │   │   ├── api-design-HANDOFF.md
+│           │   │   │   ├── auth-review-HANDOFF.md
+│           │   │   │   ├── incident-context.md
+│           │   │   │   └── rollout.md
+│           │   │   ├── evals.json
+│           │   │   └── trigger-evals.json
 │           │   └── SKILL.md
 │           ├── codex/
 │           │   └── SKILL.md

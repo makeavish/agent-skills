@@ -1,7 +1,7 @@
 {
   "name": "personal",
-  "version": "1.7.0",
-  "description": "Personal writing and coding-agent skills for Codex",
+  "version": "1.9.0",
+  "description": "Personal writing and agent-collaboration skills for Codex",
   "author": {
     "name": "makeavish",
     "url": "https://github.com/makeavish"
@@ -17,12 +17,13 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Makeavish Skills",
-    "shortDescription": "Write polished prose and coordinate coding-agent CLIs.",
-    "longDescription": "Skills for drafting and revising human-facing prose, plus using Codex CLI, Claude Code CLI, Antigravity CLI, and Kilo Code CLI for analysis, reviews, refactoring, and automated editing.",
+    "shortDescription": "Write polished prose and coordinate CLI and browser-based agent peers.",
+    "longDescription": "Skills for drafting and revising human-facing prose, using GPT-6 Pro through an authenticated ChatGPT browser with durable Codex handoffs, and coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Kilo Code CLI for analysis, reviews, refactoring, and automated editing.",
     "developerName": "makeavish",
     "category": "Productivity",
     "capabilities": [
       "Code analysis",
+      "GPT-6 Pro browser handoffs",
       "Plan review",
       "Prose drafting and revision",
       "Refactoring",
@@ -33,6 +34,7 @@
       "Rewrite this draft for clarity while preserving my voice.",
       "Use Codex CLI to review this implementation plan.",
       "Run a second-opinion code analysis with Claude Code CLI.",
+      "Use GPT-6 Pro in my authenticated browser and leave a resumable Codex handoff.",
       "Choose the right coding-agent CLI for this task."
     ]
   }
