@@ -21,7 +21,7 @@ Briefly tell the user why Pro will help, then proceed under existing authorizati
 
 ## Host capabilities
 
-Requires a writable workspace, authenticated ChatGPT with GPT-6 Pro, and callable UI tools that can select the intended browser, inspect visible state, navigate, type, click, and capture responses. Read the installed browser/computer-use instructions or the tool's documentation. No particular skill name, MCP server, SDK, operating system, or Codex app is required.
+Requires an authorized writable artifact location, authenticated ChatGPT with GPT-6 Pro, and callable UI tools that can select the intended browser, inspect visible state, navigate, type, click, and capture responses. Read the installed browser/computer-use instructions or the tool's documentation. No particular skill name, MCP server, SDK, operating system, or Codex app is required.
 
 - **Codex:** Use available computer-use tools for Helium or an explicitly bound Codex in-app browser.
 - **Claude Code or another agent:** Use that host's available computer-use/browser tools for Helium or its own managed browser. Do not assume Codex tools or a Codex in-app browser exist there.
@@ -41,7 +41,7 @@ These instructions enable portable use, but cannot supply authentication or UI t
 
 ## The continuity contract
 
-Every new Pro conversation gets a durable folder before the first browser action:
+Every new Pro conversation gets a durable folder before the first browser action. When repository writes are authorized, use this default:
 
 ```text
 <workspace>/.agents/pro-sessions/<session-id>/
@@ -51,9 +51,11 @@ Every new Pro conversation gets a durable folder before the first browser action
 
 Build `<session-id>` as `pro-<UTC timestamp>-<short-goal-slug>-<4 random hex>`, for example `pro-20260901T123456Z-cache-review-a1b2`. Copy [assets/session-handoff-template.md](assets/session-handoff-template.md) into `HANDOFF.md` and replace every placeholder. Create `outputs/` only when the result is clearer as a separate file.
 
-The artifact is mandatory because browser tabs, authentication, and model availability are not durable enough for cross-session work. If the workspace is not writable, stop and ask for a durable path; do not begin the browser conversation with only a temporary file.
+The artifact is mandatory because browser tabs, authentication, and model availability are not durable enough for cross-session work. A user-imposed read-only repository constraint prohibits all writes there, including untracked session files. Use an already authorized durable directory outside the repository, with `<session-id>/HANDOFF.md` beneath it; keep `workspace` pointing to the original workspace and return the exact external artifact path. Do not modify ignore files or reinterpret read-only as tracked-files-only.
 
-- Reopening the same ChatGPT conversation updates the same `HANDOFF.md`.
+If no authorized writable durable location is available, ask for one before any browser action or file creation. Report the pending artifact and blocker in the response rather than claiming a file exists. The same boundary applies to existing handoffs: update in place only when permitted; otherwise ask for an authorized writable copy location, preserve the original, and record its source path when copying is authorized. Do not use a temporary file as the production continuity artifact.
+
+- Reopening the same ChatGPT conversation updates the same `HANDOFF.md`, subject to the write boundary above.
 - A new, forked, or recovery chat creates a new session folder and records the parent session ID and path.
 - Never use a global "latest" session when more than one artifact exists. Resume by explicit artifact path, session ID, and recorded chat URL/title.
 - Keep the artifact local. Do not stage, commit, upload, or share it unless the user explicitly asks.
@@ -195,7 +197,7 @@ Failure handling:
 
 Before yielding, verify that:
 
-- `HANDOFF.md` exists even if preflight failed;
+- `HANDOFF.md` exists even if browser preflight failed, or no authorized artifact location exists and that blocker was reported before any browser action;
 - a successful session contains or links a usable practical artifact;
 - the visible model/mode evidence and canonical chat locator are recorded when available;
 - every completed turn has a checkpoint and current resume packet;

@@ -61,9 +61,9 @@ codex plugin add personal@makeavish-skills
 
 ### ChatGPT Pro requirements and continuity
 
-The `chatgpt-pro` skill requires browser UI tools, an authenticated ChatGPT session with GPT-6 Pro, and a writable workspace. It does not depend on Codex-specific tools: Claude Code and other hosts use their own available computer-use or browser tools. A host without those capabilities can prepare a blocked handoff but cannot consult Pro. Install or load the skill in each host that should use it; automatic discovery depends on that host's skill support.
+The `chatgpt-pro` skill requires browser UI tools, an authenticated ChatGPT session with GPT-6 Pro, and an authorized writable artifact location. It does not depend on Codex-specific tools: Claude Code and other hosts use their own available computer-use or browser tools. A host without those capabilities can prepare a blocked handoff but cannot consult Pro. Install or load the skill in each host that should use it; automatic discovery depends on that host's skill support.
 
-For difficult work, the skill calls for a focused Pro consultation after local investigation identifies a concrete reasoning gap. Routine tasks and user requests to avoid external consultation stay local. New sessions save results and restart context under `.agents/pro-sessions/<session-id>/HANDOFF.md`. Existing `.codex/pro-sessions/` handoffs remain resumable in place. A handoff can target Codex, Claude Code, or another agent that has access to the workspace and artifacts.
+For difficult work, the skill calls for a focused Pro consultation after local investigation identifies a concrete reasoning gap. Routine tasks and user requests to avoid external consultation stay local. New sessions normally save results and restart context under `.agents/pro-sessions/<session-id>/HANDOFF.md`. For a read-only repository, use an authorized durable directory outside it; if none is available, ask for one before browser actions or writes. Existing `.codex/pro-sessions/` handoffs remain resumable in place when writes are permitted. A handoff can target Codex, Claude Code, or another agent that has access to the workspace and artifacts.
 
 ## IDs
 
@@ -99,6 +99,7 @@ For difficult work, the skill calls for a focused Pro consultation after local i
 │           │   │   ├── files/
 │           │   │   │   ├── api-design-HANDOFF.md
 │           │   │   │   ├── auth-review-HANDOFF.md
+│           │   │   │   ├── auth-review-browser-mock.md
 │           │   │   │   ├── incident-context.md
 │           │   │   │   └── rollout.md
 │           │   │   ├── evals.json

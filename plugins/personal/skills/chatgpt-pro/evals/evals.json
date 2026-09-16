@@ -3,13 +3,13 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Use GPT-6 Pro in my authenticated browser to review the attached rollout.md plan. Use Helium, keep the repo read-only, and hand the recommendation back to Codex so another Codex session can continue tomorrow.",
-      "expected_output": "The agent creates a workspace-scoped durable handoff before browser work, uses Helium through Computer Use, verifies authenticated ChatGPT plus visible GPT-6 and Pro controls, sends only approved relevant context, saves a practical review artifact, and returns a precise Codex handoff and resume route.",
+      "prompt": "Use GPT-6 Pro in my authenticated browser to review the attached rollout.md plan. Use Helium and keep the entire repository read-only, including untracked files. You may save durable session artifacts under /session-artifacts/rollout-review outside the repository. Hand the recommendation back to Codex so another Codex session can continue tomorrow.",
+      "expected_output": "The agent creates a durable handoff under the authorized external directory before browser work, makes no repository writes, uses Helium through available UI tools, verifies authenticated ChatGPT plus visible GPT-6 and Pro controls, saves a practical review artifact, and returns its exact path and resume route.",
       "files": [
         "evals/files/rollout.md"
       ],
       "expectations": [
-        "A unique .agents/pro-sessions/<session-id>/HANDOFF.md is created before the first browser action and is not staged or committed.",
+        "A unique /session-artifacts/rollout-review/<session-id>/HANDOFF.md is created before the first browser action; workspace records the original repository and no tracked or untracked files are written there.",
         "The workflow prefers Helium through the host's available UI tools and does not use Chrome, an API, Codex CLI, or direct HTTP as a substitute.",
         "The agent verifies an authenticated composer and visible active evidence for both GPT-6 and Pro immediately before sending; it does not infer the model from the plan, page title, URL, or model self-report.",
         "The artifact records the supplied context, canonical chat locator, model evidence, checkpoint, accepted versus unverified claims, and a bounded resume packet.",
@@ -18,17 +18,19 @@
     },
     {
       "id": 2,
-      "prompt": "Continue the Pro review recorded in the attached auth-review-HANDOFF.md. There are other Pro chats open, so resume the exact one, ask the next question already recorded in the handoff, and update the artifact for me.",
-      "expected_output": "The agent reads the named handoff completely, resumes only the explicit recorded chat, re-verifies chat identity and GPT-6 Pro before sending the recorded delta, and updates the same artifact with a new monotonic checkpoint.",
+      "prompt": "OFFLINE SIMULATION ONLY: use the attached auth-review-browser-mock.md as the sole browser state and response source; do not open a browser, navigate any URL, or send an external message. Copy the handoff into an isolated evaluation directory and update only that copy, labeling all new UI evidence and outputs simulated. Continue the review recorded in auth-review-HANDOFF.md. Other Pro chats are open in the mock, so resume the exact one, ask its recorded next question, and update the artifact.",
+      "expected_output": "The agent reads the named handoff completely, simulates resuming only the recorded chat using the supplied browser states, checks chat identity and GPT-6 Pro before a simulated send, and updates the evaluation copy with a new monotonic checkpoint.",
       "files": [
-        "evals/files/auth-review-HANDOFF.md"
+        "evals/files/auth-review-HANDOFF.md",
+        "evals/files/auth-review-browser-mock.md"
       ],
       "expectations": [
         "The named HANDOFF.md is treated as the source of truth and the agent does not choose a global latest or most recent chat.",
-        "The agent opens the recorded canonical URL or exact title/session marker and verifies chat identity before sending.",
-        "Authentication and visible GPT-6 plus Pro controls are re-verified immediately before the follow-up.",
-        "Only the recorded delta or exact next prompt is sent rather than replaying an unbounded transcript.",
-        "The same artifact increments turn and revision and refreshes the practical artifact, open questions, resume packet, and Codex handoff."
+        "The agent logs opening the recorded mock locator and matches its URL, title, and session marker before simulated submission.",
+        "Mock authentication and visible GPT-6 plus Pro controls are re-verified immediately before the simulated follow-up.",
+        "Only the recorded delta or exact next prompt is submitted in the simulation rather than replaying an unbounded transcript.",
+        "The same evaluation copy preserves Turn 001 and Turn 002 verbatim, appends Turn 003, increases revision beyond 2, and refreshes the practical artifact, open questions, resume packet, and Codex handoff.",
+        "Only supplied mock states and responses are used; no browser or external message is used, synthetic URLs are not fetched, and all new UI evidence and outputs are labeled simulated."
       ]
     },
     {
@@ -90,15 +92,16 @@
     },
     {
       "id": 7,
-      "prompt": "You are running in Claude Code with Helium UI tools and no Codex tools. Resume the attached legacy auth-review-HANDOFF.md, ask its recorded next question, and prepare the result for a later Codex task. Both agents share /workspace/auth-service. No tool to message Codex is available.",
-      "expected_output": "Claude Code reads the legacy artifact in place, uses its own UI tools, adds portable v2 fields while preserving history, and prepares a Codex-targeted handoff whose delivery remains pending.",
-      "files": ["evals/files/auth-review-HANDOFF.md"],
+      "prompt": "OFFLINE SIMULATION ONLY: use the attached auth-review-browser-mock.md as the sole browser state and response source; do not open a browser, navigate any URL, or send an external message. Copy the legacy handoff into an isolated evaluation directory and update only that copy, labeling all new UI evidence and outputs simulated. Simulate Claude Code with Helium UI tools and no Codex tools. Resume auth-review-HANDOFF.md, ask its recorded next question, and prepare the result for a later Codex task. Both agents share /workspace/auth-service in the scenario. No tool to message Codex is available.",
+      "expected_output": "The simulated Claude Code host updates the legacy evaluation copy in place using only supplied mock UI states, adds portable v2 fields while preserving history, and prepares a Codex-targeted handoff whose delivery remains pending.",
+      "files": ["evals/files/auth-review-HANDOFF.md", "evals/files/auth-review-browser-mock.md"],
       "expectations": [
         "No Codex-only tool, app, skill name, or SDK is required or invented.",
-        "The legacy artifact stays at its existing path and retains its prior checkpoints and session identity.",
+        "The legacy evaluation copy stays at its existing path, preserves Turn 001 and Turn 002 verbatim and the session identity, and appends Turn 003 without modifying the source fixture.",
         "The updated artifact records Claude Code as current_agent and Codex as handoff_target, with a migration note.",
-        "The next prompt comes from the existing bounded context, with fresh chat and model verification.",
-        "The output provides an exact artifact path and Codex next action without claiming delivery or creating a new Codex task."
+        "The simulated next prompt comes from the existing bounded context, with fresh chat and model verification from the mock.",
+        "The output provides an exact artifact path and Codex next action without claiming delivery or creating a new Codex task.",
+        "Only supplied mock states and responses are used; no browser or external message is used, synthetic URLs are not fetched, and all new UI evidence and outputs are labeled simulated."
       ]
     },
     {
@@ -111,6 +114,18 @@
         "The agent does not invent a browser tool, require Codex Desktop, install tooling, or substitute an API call.",
         "The prepared question and known local attempts survive in the artifact without fabricated evidence.",
         "Available authorized local investigation continues and no Pro response is claimed."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Prepare a Pro consultation about this migration, but keep the entire repository read-only, including untracked files and ignore rules. No external artifact directory has been authorized, and I have not provided a durable storage location. Do not start the browser until that is resolved.",
+      "expected_output": "The agent requests an authorized durable directory outside the repository, reports the pending artifact and location blocker, and performs no browser action or file creation.",
+      "files": [],
+      "expectations": [
+        "No tracked or untracked repository file, ignore rule, external directory, or temporary handoff is created or modified.",
+        "The agent asks for an authorized durable artifact directory outside the repository before any browser action.",
+        "The response states that HANDOFF.md is pending rather than claiming a blocked file was saved.",
+        "Read-only is not reinterpreted as permitting untracked session writes."
       ]
     }
   ]
