@@ -92,13 +92,13 @@
     },
     {
       "id": 7,
-      "prompt": "OFFLINE SIMULATION ONLY: use the attached auth-review-browser-mock.md as the sole browser state and response source; do not open a browser, navigate any URL, or send an external message. Copy the legacy handoff into an isolated evaluation directory and update only that copy, labeling all new UI evidence and outputs simulated. Simulate Claude Code with Helium UI tools and no Codex tools. Resume auth-review-HANDOFF.md, ask its recorded next question, and prepare the result for a later Codex task. Both agents share /workspace/auth-service in the scenario. No tool to message Codex is available.",
-      "expected_output": "The simulated Claude Code host updates the legacy evaluation copy in place using only supplied mock UI states, adds portable v2 fields while preserving history, and prepares a Codex-targeted handoff whose delivery remains pending.",
+      "prompt": "OFFLINE SIMULATION ONLY: use the attached auth-review-browser-mock.md as the sole browser state and response source; do not open a browser, navigate any URL, or send an external message. Copy the handoff into an isolated evaluation directory and update only that copy, labeling all new UI evidence and outputs simulated. Simulate Claude Code with Helium UI tools and no Codex tools. Resume auth-review-HANDOFF.md, ask its recorded next question, and prepare the result for a later Codex task. Both agents share /workspace/auth-service in the scenario. No tool to message Codex is available.",
+      "expected_output": "The simulated Claude Code host updates the evaluation copy in place using only supplied mock UI states, updates the current agent while preserving history, and prepares a Codex-targeted handoff whose delivery remains pending.",
       "files": ["evals/files/auth-review-HANDOFF.md", "evals/files/auth-review-browser-mock.md"],
       "expectations": [
         "No Codex-only tool, app, skill name, or SDK is required or invented.",
-        "The legacy evaluation copy stays at its existing path, preserves Turn 001 and Turn 002 verbatim and the session identity, and appends Turn 003 without modifying the source fixture.",
-        "The updated artifact records Claude Code as current_agent and Codex as handoff_target, with a migration note.",
+        "The evaluation copy stays at its existing path, preserves Turn 001 and Turn 002 verbatim and the session identity, and appends Turn 003 without modifying the source fixture.",
+        "The updated artifact records Claude Code as current_agent and Codex as handoff_target, while preserving originating_agent.",
         "The simulated next prompt comes from the existing bounded context, with fresh chat and model verification from the mock.",
         "The output provides an exact artifact path and Codex next action without claiming delivery or creating a new Codex task.",
         "Only supplied mock states and responses are used; no browser or external message is used, synthetic URLs are not fetched, and all new UI evidence and outputs are labeled simulated."

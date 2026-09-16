@@ -1,6 +1,10 @@
 ---
-contract: "codex-chatgpt-pro-handoff/v1"
+contract: "pro-browser-handoff/v2"
 session_id: "pro-20260831T091500Z-auth-review-7c2a"
+originating_agent: "Codex"
+current_agent: "Codex"
+handoff_target: "Codex"
+handoff_delivery: "returned-to-host"
 status: "handed-off"
 revision: 2
 turn: 2
@@ -67,7 +71,8 @@ Unverified: Current storage, transaction isolation, grace reuse, and revocation 
 Task: Give one invariant and a compact concurrency/replay test matrix. Do not assume access to local code.
 ```
 
-## Handoff to Codex
+## Handoff to agent
 
+- Target agent: Codex
 - Exact next Pro prompt: Give one invariant and a compact concurrency/replay test matrix. Do not assume access to local code.
 - Resume route: `https://chatgpt.com/c/example-auth-review-7c2a`; verify the title, marker, authentication, and visible GPT-6 + Pro controls before sending.

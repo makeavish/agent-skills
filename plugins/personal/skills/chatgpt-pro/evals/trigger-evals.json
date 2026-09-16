@@ -1,7 +1,7 @@
 [
   {"query":"Use GPT-6 Pro in my authenticated Helium session to review this migration plan, then leave a handoff another Codex task can resume tomorrow.","should_trigger":true},
   {"query":"Ask Pro for a second opinion on this API design and bring the decision back into Codex with the open questions preserved.","should_trigger":true},
-  {"query":"continue the chatgpt pro browser session from .codex/pro-sessions/pro-20260831T091500Z-auth-review-7c2a/HANDOFF.md","should_trigger":true},
+  {"query":"continue the chatgpt pro browser session from .agents/pro-sessions/pro-20260831T091500Z-auth-review-7c2a/HANDOFF.md","should_trigger":true},
   {"query":"The old Pro chat is gone. Rehydrate it from the handoff artifact in a new GPT-6 Pro browser conversation.","should_trigger":true},
   {"query":"Send these three code snippets to GPT 6 Pro in Helium and save its exact review for a Codex handoff.","should_trigger":true},
   {"query":"Use your in-app browser to consult GPT-6 Pro; keep this repository read-only and make the result resumable.","should_trigger":true},

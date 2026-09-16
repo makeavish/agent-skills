@@ -1,6 +1,10 @@
 ---
-contract: "codex-chatgpt-pro-handoff/v1"
+contract: "pro-browser-handoff/v2"
 session_id: "pro-20260829T174500Z-api-design-9f11"
+originating_agent: "Codex"
+current_agent: "Codex"
+handoff_target: "Codex"
+handoff_delivery: "returned-to-host"
 status: "handed-off"
 revision: 4
 turn: 4
@@ -39,7 +43,8 @@ Unverified: Existing endpoints, response shapes, error schema, persistence, and 
 Task: Produce a compact compatibility matrix and identify the three highest-risk assumptions. Do not assume access to local code.
 ```
 
-## Handoff to Codex
+## Handoff to agent
 
+- Target agent: Codex
 - Exact next Pro prompt: Produce a compact compatibility matrix and identify the three highest-risk assumptions.
 - Resume route: The old URL is missing; create a linked child session and preserve this artifact unchanged.
