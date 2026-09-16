@@ -9,8 +9,8 @@
         "evals/files/rollout.md"
       ],
       "expectations": [
-        "A unique .codex/pro-sessions/<session-id>/HANDOFF.md is created before the first browser action and is not staged or committed.",
-        "The workflow prefers Helium through the installed Computer Use instructions and does not use Chrome, an API, Codex CLI, or direct HTTP as a substitute.",
+        "A unique .agents/pro-sessions/<session-id>/HANDOFF.md is created before the first browser action and is not staged or committed.",
+        "The workflow prefers Helium through the host's available UI tools and does not use Chrome, an API, Codex CLI, or direct HTTP as a substitute.",
         "The agent verifies an authenticated composer and visible active evidence for both GPT-6 and Pro immediately before sending; it does not infer the model from the plan, page title, URL, or model self-report.",
         "The artifact records the supplied context, canonical chat locator, model evidence, checkpoint, accepted versus unverified claims, and a bounded resume packet.",
         "The session leaves a practical review result and a Handoff to Codex with an exact next local action and route back to the same Pro chat."
@@ -73,6 +73,44 @@
         "The proposed prompt uses the minimum relevant redacted context and does not include the API token.",
         "The artifact records the exact source file and the redacted fields or digest that would be transmitted.",
         "If the user does not confirm, status becomes blocked with turn 0, a monotonic revision, and an exact recovery step."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "We have ruled out clock skew and retry duplication in this synthetic consensus bug with targeted tests. The trace still permits two contradictory explanations for a lost committed write, and the distinguishing tests have been inconclusive. Determine the next decisive experiment. Browser consultation is permitted, Helium UI tools are available, and all context is synthetic; I have not named another model.",
+      "expected_output": "The agent proactively selects the skill, states the reasoning gap, prepares one focused consultation with the evidence and failed attempts, verifies Pro through the host UI, and brings back an experiment to validate locally.",
+      "files": [],
+      "expectations": [
+        "The reasoning gap triggers Pro consultation without requiring the user to name Pro or approve automatic selection again.",
+        "The question preserves the contradictory hypotheses and inconclusive tests without inventing trace details.",
+        "A v2 artifact records the escalation reason, originating/current agents, target agent, and a focused question before browser work.",
+        "The agent verifies GPT-6 plus Pro before sending and follows the actual host tool policy.",
+        "The response leads to a local verification step; it does not start an unbounded or recursive consultation loop."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "You are running in Claude Code with Helium UI tools and no Codex tools. Resume the attached legacy auth-review-HANDOFF.md, ask its recorded next question, and prepare the result for a later Codex task. Both agents share /workspace/auth-service. No tool to message Codex is available.",
+      "expected_output": "Claude Code reads the legacy artifact in place, uses its own UI tools, adds portable v2 fields while preserving history, and prepares a Codex-targeted handoff whose delivery remains pending.",
+      "files": ["evals/files/auth-review-HANDOFF.md"],
+      "expectations": [
+        "No Codex-only tool, app, skill name, or SDK is required or invented.",
+        "The legacy artifact stays at its existing path and retains its prior checkpoints and session identity.",
+        "The updated artifact records Claude Code as current_agent and Codex as handoff_target, with a migration note.",
+        "The next prompt comes from the existing bounded context, with fresh chat and model verification.",
+        "The output provides an exact artifact path and Codex next action without claiming delivery or creating a new Codex task."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "You are a terminal agent with local file tools but no browser or computer-use tools. Several well-founded attempts have stalled on a hard scheduler bug. Consult Pro if it helps, and continue any local investigation you can. Do not install tools.",
+      "expected_output": "The agent prepares a durable blocked consultation artifact with the question and missing UI capability, then continues useful local work without pretending to have used Pro.",
+      "files": [],
+      "expectations": [
+        "The artifact records status blocked, turn 0, the exact missing UI capability, and a next step for a capable host.",
+        "The agent does not invent a browser tool, require Codex Desktop, install tooling, or substitute an API call.",
+        "The prepared question and known local attempts survive in the artifact without fabricated evidence.",
+        "Available authorized local investigation continues and no Pro response is claimed."
       ]
     }
   ]

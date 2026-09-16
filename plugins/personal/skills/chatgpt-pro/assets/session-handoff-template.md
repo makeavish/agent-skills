@@ -1,6 +1,12 @@
 ---
-contract: "codex-chatgpt-pro-handoff/v1"
+contract: "pro-browser-handoff/v2"
 session_id: "<session-id>"
+originating_agent: "<host-agent-name>"
+current_agent: "<host-agent-name>"
+handoff_target: "<target-agent-name>"
+handoff_delivery: "not-ready"
+escalation_reason: >-
+  <explicit-request-or-specific-reason-for-proactive-consultation>
 parent_session_id: ""
 parent_artifact: ""
 status: initializing
@@ -12,7 +18,8 @@ branch: ""
 commit: ""
 dirty_state: >-
   <clean-or-brief-scoped-note>
-browser_app: "<Helium-or-Codex-in-app-browser>"
+browser_app: "<Helium-or-explicit-host-managed-browser>"
+browser_control: "<available-host-tool>"
 chat_url: ""
 chat_title: ""
 session_marker: "<non-sensitive-session-marker>"
@@ -52,6 +59,7 @@ artifact_paths: []
 
 - User constraints:
 - Authority boundary:
+- Local investigation and failed attempts:
 - Context supplied to Pro:
 - Context deliberately withheld:
 
@@ -79,7 +87,7 @@ artifact_paths: []
 
 ## Evidence and deliverables
 
-- Local evidence Codex verified:
+- Local evidence the host agent verified:
 - Pro-provided evidence not yet verified:
 - Deliverables:
 
@@ -104,11 +112,14 @@ Unresolved questions:
 
 Task for this turn:
 
-End with HANDOFF_TO_CODEX using the format from the original session.
+End with HANDOFF_TO_AGENT, naming the target agent and including Outcome, Artifact, Decisions, Evidence, Assumptions or unverified claims, Recommended next action, and Exact next prompt if returned to Pro.
 ```
 
-## Handoff to Codex
+## Handoff to agent
 
+- Target agent:
+- Delivery status and evidence:
+- Workspace access and path mappings:
 - User objective:
 - What Pro produced:
 - Practical artifact path:
@@ -116,6 +127,6 @@ End with HANDOFF_TO_CODEX using the format from the original session.
 - Suggestions still requiring verification:
 - Local state Pro could not inspect:
 - Open risks:
-- Next Codex action:
+- Next local action:
 - Exact next Pro prompt:
 - Resume route: `<canonical-chat-url>` with visible GPT-6 + Pro re-verification required.
