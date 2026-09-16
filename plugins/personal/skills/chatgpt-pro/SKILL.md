@@ -15,7 +15,7 @@ Briefly explain why consultation will help and proceed under existing authorizat
 
 ## Browser access
 
-Use the host's available computer-use/browser tools and their instructions. Prefer **Helium**, with the host's explicitly selected managed browser as fallback. Honor the user's browser constraints; do not select Chrome without explicit authorization or use automatic browser selection that might choose it.
+Use the host's available computer-use/browser tools and their instructions. Prefer the user's default browser where ChatGPT is already logged in, honoring any explicit browser choice.
 
 Operate through visible UI, refreshing state after meaningful actions and deriving clicks from current element references or screenshots. Do not substitute API/CLI calls, install tooling, or interfere with a window the user is controlling. If tools are unavailable, record the blocker and continue useful authorized local work.
 

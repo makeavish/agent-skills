@@ -18,7 +18,7 @@ branch: ""
 commit: ""
 dirty_state: >-
   <clean-or-brief-scoped-note>
-browser_app: "<Helium-or-explicit-host-managed-browser>"
+browser_app: "<selected-browser-name>"
 browser_control: "<available-host-tool>"
 chat_url: ""
 chat_title: ""

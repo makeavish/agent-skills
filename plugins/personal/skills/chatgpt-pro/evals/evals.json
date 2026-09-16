@@ -3,14 +3,14 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Use GPT-6 Pro in my authenticated browser to review the attached rollout.md plan. Use Helium and keep the entire repository read-only, including untracked files. You may save durable session artifacts under /session-artifacts/rollout-review outside the repository. Hand the recommendation back to Codex so another Codex session can continue tomorrow.",
-      "expected_output": "The agent creates a durable handoff under the authorized external directory before browser work, makes no repository writes, uses Helium through available UI tools, verifies authenticated ChatGPT plus visible GPT-6 and Pro controls, saves a practical review artifact, and returns its exact path and resume route.",
+      "prompt": "Use GPT-6 Pro to review the attached rollout.md plan. ChatGPT is already logged in through my default browser. Keep the entire repository read-only, including untracked files. You may save durable session artifacts under /session-artifacts/rollout-review outside the repository. Hand the recommendation back to Codex so another Codex session can continue tomorrow.",
+      "expected_output": "The agent creates a durable handoff under the authorized external directory before browser work, makes no repository writes, uses the default browser's existing ChatGPT session through available UI tools, verifies authenticated ChatGPT plus visible GPT-6 and Pro controls, saves a practical review artifact, and returns its exact path and resume route.",
       "files": [
         "evals/files/rollout.md"
       ],
       "expectations": [
         "A unique /session-artifacts/rollout-review/<session-id>/HANDOFF.md is created before the first browser action; workspace records the original repository and no tracked or untracked files are written there.",
-        "The workflow prefers Helium through the host's available UI tools and does not use Chrome, an API, Codex CLI, or direct HTTP as a substitute.",
+        "The workflow prefers the user's default browser where ChatGPT is already logged in and uses the host's available UI tools rather than an API, CLI, or direct HTTP substitute.",
         "The agent verifies an authenticated composer and visible active evidence for both GPT-6 and Pro immediately before sending; it does not infer the model from the plan, page title, URL, or model self-report.",
         "The artifact records the supplied context, canonical chat locator, model evidence, checkpoint, accepted versus unverified claims, and a bounded resume packet.",
         "The session leaves a practical review result and a Handoff to Codex with an exact next local action and route back to the same Pro chat."
