@@ -6,14 +6,14 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume),
 # Codex Skill Guide
 
 ## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`), which reasoning effort to use (`ultra`, `xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
-   - Models, most → least capable: `gpt-5.6-sol` (flagship), `gpt-5.6-terra` (balanced), `gpt-5.6-luna` (fastest/lightest).
-   - The `ultra` reasoning effort is the top tier and is only supported by `gpt-5.6-sol` and `gpt-5.6-terra`; `gpt-5.6-luna` tops out at `xhigh`. Don't pair `ultra` with `luna`.
+1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-6-astra`, `gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`), which reasoning effort to use (`ultra`, `max`, `xhigh`, `high`, `medium`, or `low`), which sandbox mode (`read-only`, `workspace-write`, or `danger-full-access`) to use, and whether to enable fast mode in a **single prompt with four questions**. Keep choices the user already supplied and ask only for missing ones. Default sandbox to `read-only` if the user is unsure. If the user already asked for fast mode, set `CODEX_FAST_MODE=true` without asking again.
+   - Models, most → least capable: `gpt-6-astra` (flagship for the hardest end-to-end work), `gpt-5.6-sol` (complex work), `gpt-5.6-terra` (balanced), `gpt-5.6-luna` (fastest/lightest).
+   - All four support `low`, `medium`, `high`, `xhigh`, and `max`. Codex also offers `ultra` with Astra, Sol, and Terra for automatic task delegation to subagents; Luna tops out at `max`. Don't pair `ultra` with Luna or treat it as an API reasoning-effort value.
 2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
 3. Store the user's fast-mode choice as `CODEX_FAST_MODE`. When it is enabled, add `--enable fast_mode` to every `codex exec` or `codex exec resume` command for this workflow.
 4. Assemble the command with the appropriate options:
    - `-m, --model <MODEL>`
-   - `--config model_reasoning_effort="<ultra|xhigh|high|medium|low>"` (`ultra` only with `gpt-5.6-sol` or `gpt-5.6-terra`)
+   - `--config model_reasoning_effort="<ultra|max|xhigh|high|medium|low>"` (`ultra` only with `gpt-6-astra`, `gpt-5.6-sol`, or `gpt-5.6-terra`)
    - `--sandbox <read-only|workspace-write|danger-full-access>`
    - `--enable fast_mode` (optional, when `CODEX_FAST_MODE=true`)
    - `--full-auto`
@@ -25,6 +25,10 @@ description: Use when the user asks to run Codex CLI (codex exec, codex resume),
 6. **IMPORTANT**: By default, append `2>/dev/null` to all `codex exec` commands to suppress thinking tokens (stderr). Only show stderr if the user explicitly requests to see thinking tokens or if debugging is needed.
 7. Run the command, capture stdout/stderr (filtered as appropriate), and summarize the outcome for the user.
 8. **After Codex completes**, capture the session ID from the output line `session id: <uuid>` and store it as `CODEX_SESSION_ID`. Inform the user: "You can resume this Codex session at any time by saying 'codex resume' or asking me to continue with additional analysis or changes."
+
+### Model Availability
+
+Model guidance checked on 2026-09-16 against the [official model guide](https://learn.chatgpt.com/docs/models) and local Codex model metadata with CLI `0.154.0`. Availability depends on account, provider, and client version. If a model or effort is unavailable, check `/model` in the target CLI and report the mismatch before substituting another model.
 
 ### Output Capture Note
 - Use `-o <file>` with `codex exec` when you expect long output (large analysis, multi-file refactors). Reading from a file is more reliable than stdout for large results.

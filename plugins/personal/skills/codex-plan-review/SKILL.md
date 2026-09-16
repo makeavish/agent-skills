@@ -23,9 +23,10 @@ When invoked, perform the following iterative review loop:
 
 Use `AskUserQuestion` to ask **all three questions in a single prompt**:
 
-> Which Codex model should I use for this review (`gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`)? What reasoning effort (`ultra`, `xhigh`, `high`, `medium`, or `low`) should I use? And should I enable Codex fast mode for this review?
+> Which Codex model should I use for this review (`gpt-6-astra`, `gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`)? What reasoning effort (`ultra`, `max`, `xhigh`, `high`, `medium`, or `low`) should I use? And should I enable Codex fast mode for this review?
 
-- Models, most → least capable: `gpt-5.6-sol` (flagship), `gpt-5.6-terra` (balanced), `gpt-5.6-luna` (fastest/lightest). The `ultra` reasoning effort is the top tier and is only supported by `gpt-5.6-sol` and `gpt-5.6-terra`; `gpt-5.6-luna` tops out at `xhigh`.
+- Models, most → least capable: `gpt-6-astra` (flagship for the hardest end-to-end work), `gpt-5.6-sol` (complex work), `gpt-5.6-terra` (balanced), `gpt-5.6-luna` (fastest/lightest). All four support `low`, `medium`, `high`, `xhigh`, and `max`. Codex also offers `ultra` with Astra, Sol, and Terra for automatic task delegation to subagents; Luna tops out at `max`. Don't pair `ultra` with Luna or treat it as an API reasoning-effort value.
+- Model guidance checked on 2026-09-16 against the [official model guide](https://learn.chatgpt.com/docs/models) and local Codex model metadata with CLI `0.154.0`. Availability depends on account, provider, and client version. If a requested model or effort is unavailable, check `/model` in the target CLI and report the mismatch before substituting another model.
 
 - If the user already specified a model as an argument, keep it. If the user already explicitly asked for fast mode, set `CODEX_FAST_MODE=true` without asking that part again. If the user specified neither reasoning effort nor fast mode, default to `high` effort and `CODEX_FAST_MODE=false`.
 - Store the answers as `CODEX_MODEL`, `CODEX_EFFORT`, and `CODEX_FAST_MODE` for use in all subsequent `codex exec` calls.
