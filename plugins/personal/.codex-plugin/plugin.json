@@ -1,6 +1,6 @@
 {
   "name": "personal",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Personal writing and agent-collaboration skills for Codex",
   "author": {
     "name": "makeavish",
@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Makeavish Skills",
     "shortDescription": "Write polished prose and coordinate CLI and browser-based agent peers.",
-    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, and coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Kilo Code CLI for analysis, reviews, refactoring, and automated editing.",
+    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, and coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Cursor CLI for analysis, reviews, refactoring, and automated editing.",
     "developerName": "makeavish",
     "category": "Productivity",
     "capabilities": [
