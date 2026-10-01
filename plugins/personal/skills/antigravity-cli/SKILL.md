@@ -5,6 +5,8 @@ description: Use when the user asks to run Antigravity CLI (the agy command, agy
 
 # Antigravity CLI Skill Guide
 
+Model guidance checked on 2026-10-01 against the [official model list](https://antigravity.google/docs/models), [headless CLI documentation](https://antigravity.google/docs/cli/headless/), and `agy models` / `agy --help` on CLI `1.1.5`. Published models can reach individual CLI catalogs later; use the installed catalog to validate each selection.
+
 > **Migration note:** Google retired Gemini CLI for AI Pro / AI Ultra / free-tier users on **June 18, 2026** in favor of **Antigravity CLI**, the Go-based successor that shares a unified architecture with the Antigravity 2.0 desktop app. The command is now `agy` (not `gemini`). Organizations on a Gemini Code Assist Standard/Enterprise license or Google Cloud may keep using the legacy Gemini CLI; everyone else should migrate. If the user still expects the old `gemini` command or `npm install -g @google/gemini-cli`, let them know it's deprecated and point them here.
 
 ## Preflight Checks
@@ -26,18 +28,19 @@ Before running any Antigravity command, verify the CLI is installed and authenti
 ## Running a Task
 
 1. Ask the user (via `AskUserQuestion`) which **model** to run and how much **autonomy** to grant the agent — in a **single prompt with both questions**.
-   - **Model:** a solid default is **`Gemini 3.5 Flash (High)`** (fast and capable). Offer **`Gemini 3.1 Pro (High)`** for deeper reasoning on hard tasks, and note that **`Claude Sonnet 4.6 (Thinking)`**, **`Claude Opus 4.6 (Thinking)`**, and **`GPT-OSS 120B (Medium)`** are also selectable — Antigravity is not Gemini-only. Run `agy models` to print the exact list of friendly labels on the user's build, then pass the chosen label to `--model` (e.g. `--model "Gemini 3.1 Pro (High)"`). Without `--model`, `agy` uses whatever model is set in `settings.json`.
+   - **Model:** recommend **Gemini 3.8 Flash** for everyday coding when it appears in `agy models`; offer **Gemini 3.1 Pro** for deeper reasoning, plus the available Claude Sonnet / Opus 4.6 and GPT-OSS 120B alternatives. Antigravity's Claude lineup differs from the direct Anthropic API. Run `agy models` before offering choices, and pass the exact returned slug to `--model`, not a UI display label (e.g. `--model gemini-3.8-flash-high` or `--model gemini-3.1-pro-high`). Store the chosen slug as `AGY_MODEL` for subsequent commands. On the checked CLI, the catalog still listed Gemini 3.6 Flash, so a published release alone does not establish availability. If 3.8 or an explicitly requested model is absent, report that and ask the user to choose from the actual catalog before running. Keep an explicit model choice; without `--model`, `agy` uses the model in `settings.json`.
    - **Autonomy:** for **read-only review/analysis**, run a plain `agy -p` (no skip flag needed). For tasks that **edit files or run commands**, headless mode cannot answer interactive permission prompts, so pass `--dangerously-skip-permissions` (the replacement for the old `--yolo`). Pair it with `--sandbox` whenever possible, especially in untrusted repos.
 2. Assemble the command with the appropriate options:
-   - `--model "<FRIENDLY LABEL>"` (model selection — there is **no `-m` short alias**, use the long form)
+   - `--model <MODEL_SLUG>` (select an exact slug from `agy models` — there is **no `-m` short alias**, use the long form)
+   - `--effort <low|medium|high>` (optional reasoning effort; check the selected model and installed CLI before using other levels)
    - `-p, --prompt "<your prompt here>"` (also `--print`; `-p` is the short alias for `--print`) — non-interactive / headless mode
    - `--dangerously-skip-permissions` (auto-approve all tool/edit permissions; required for autonomous edits in headless mode — there is **no `--yolo` and no `--approval-mode` launch flag** in `agy`)
    - `--sandbox` (run the session with terminal restrictions; there is **no `-s` short alias**)
    - `--add-dir <DIR>` (repeatable — extend the workspace beyond cwd; closest equivalent to the old `--include-directories`)
    - `--continue` / `-c` (resume the most recent conversation) or `--conversation <ID>` (resume a specific one) — see [Following Up](#following-up)
-   - `--print-timeout <DURATION>` (optional — caps how long `-p` waits for a response; default `5m0s`. In scripts, set a shorter value like `--print-timeout 90s` to avoid a long hang.)
+   - `--print-timeout <DURATION>` (optional — caps how long `-p` waits for a response; defaults vary by version. In scripts, set an explicit value like `--print-timeout 90s` to avoid a long hang.)
 3. **Working Directory:** Antigravity CLI has **no `-C` flag**. Run `agy` from the target repository's directory (use `cd <target-dir> &&` before the command), or extend the workspace with `--add-dir <DIR>`.
-4. **Output format:** there is **no JSON output flag** — headless output is **plain text only**. Passing `--output-format json` (or `--json` / `-o`) errors with `flags provided but not defined: -output-format` and dumps the usage text (verified on v1.0.10). Capture and parse the plain-text stdout instead. (Google's codelab shows a JSON example, but it does not work on shipped builds.)
+4. **Output format:** current builds support `--output-format text`, `json`, or `stream-json` (verified in `agy --help` on v1.1.5). Use `json` for one result with metadata or `stream-json` for NDJSON events. Older builds may lack these flags; check the installed help before using them.
 5. **Stderr Handling:** Do NOT append `2>/dev/null` by default. `agy` may emit auth errors, sandbox failures, and tool-execution errors to stderr in headless mode. Only suppress stderr if the user explicitly requests it or after confirming it contains only UI artifacts.
 6. Run the command, capture stdout, and summarize the outcome for the user.
 7. **After `agy` completes**, inform the user they can resume the conversation (`agy --continue` / `agy --conversation <id>`) or start another task at any time.
@@ -48,7 +51,7 @@ Before running any Antigravity command, verify the CLI is installed and authenti
 - For large output, redirect to a temp file:
 
   ```bash
-  cd <target-dir> && agy --model "Gemini 3.5 Flash (High)" --sandbox -p "Analyze this codebase" > /tmp/agy-output-$(date +%s).txt
+  cd <target-dir> && agy --model "${AGY_MODEL}" --sandbox -p "Analyze this codebase" > /tmp/agy-output-$(date +%s).txt
   ```
 
   Then read and summarize the file.
@@ -62,12 +65,13 @@ Before running any Antigravity command, verify the CLI is installed and authenti
 | Read-only review or analysis | `--sandbox -p "..."` |
 | Apply edits / run tools autonomously | `--dangerously-skip-permissions -p "..."` |
 | Sandboxed execution | Add `--sandbox` |
-| Pick a model | `--model "Gemini 3.1 Pro (High)"` |
+| Pick a model | `--model gemini-3.1-pro-high` (validate with `agy models`) |
+| Structured output | `--output-format json` |
 | Extend workspace to other dirs | `--add-dir <DIR>` (repeatable) |
 | Resume most recent conversation | `--continue` / `-c` |
 | Resume a specific conversation | `--conversation <ID>` |
 
-> **Flags that do NOT exist in `agy`** (carried over from Gemini CLI muscle memory or hallucinated by third-party blogs — do not use): `--yolo`, `--approval-mode`, `--checkpointing`, `--output-format json`, `-C`, `--include-directories`, an `agy run` subcommand, `--prompt-file`, `--yes`. This list and the supported flags above were verified against `agy --help` on **v1.0.10**; when in doubt, re-check `agy --help` on the installed version. The full subcommand set is `changelog`, `help`, `install`, `models`, `plugin`/`plugins`, and `update` — note there is **no `login`/`auth` subcommand** (auth is automatic).
+> **Flags that do NOT exist in `agy`** (carried over from Gemini CLI muscle memory or hallucinated by third-party blogs — do not use): `--yolo`, `--approval-mode`, `--checkpointing`, `-C`, `--include-directories`, an `agy run` subcommand, `--prompt-file`, `--yes`. Checked against `agy --help` on **v1.1.5**; re-check the installed help when behavior differs. Current subcommands include `agents`, `mcp`, `models`, and `plugin`/`plugins`; there is **no `login`/`auth` subcommand** (auth is automatic).
 
 ## Workspace Security
 
@@ -119,7 +123,7 @@ Antigravity is powered by Google (and selectable Anthropic / open) models, each 
 3. Optionally run a new `agy` task to discuss the disagreement. **Identify yourself as Claude** so the peer AI knows it's a discussion between assistants:
 
    ```bash
-   agy --model "Gemini 3.5 Flash (High)" --sandbox -p "This is Claude (<your current model name>) following up on a prior analysis. I disagree with [X] because [evidence]. What's your take?"
+   agy --model "${AGY_MODEL}" --sandbox -p "This is Claude (<your current model name>) following up on a prior analysis. I disagree with [X] because [evidence]. What's your take?"
    ```
 
 4. Frame disagreements as discussions, not corrections — either AI could be wrong.
@@ -131,6 +135,6 @@ Antigravity is powered by Google (and selectable Anthropic / open) models, each 
 - Before you use high-impact flags (`--dangerously-skip-permissions`, or disabling `--sandbox`) ask the user for permission using `AskUserQuestion` unless it was already given.
 - When output includes warnings or partial results, summarize them and ask how to adjust using `AskUserQuestion`.
 - **Capacity vs. quota (429s):** distinguish the two failure modes when the user hits a 429:
-  - `MODEL_CAPACITY_EXHAUSTED` ("No capacity available for model …") is **server-side** and affects all accounts (even paid tiers at peak). The fix is to **wait and retry with backoff**, or switch to a lighter model (e.g. `Gemini 3.5 Flash`) — it is not the user's quota.
+  - `MODEL_CAPACITY_EXHAUSTED` ("No capacity available for model …") is **server-side** and affects all accounts (even paid tiers at peak). The fix is to **wait and retry with backoff**, or propose another model from `agy models` — it is not the user's quota. Obtain the user's choice before changing an explicitly selected model.
   - `QUOTA_EXCEEDED` / `RESOURCE_EXHAUSTED` is **account-specific** quota depletion — waiting for the quota window to reset (or using a different account) is what helps.
 - This skill operates statelessly across invocations unless you explicitly resume with `--continue` / `--conversation <ID>`. CLI specifics (flags, version syntax, model labels) evolve between releases — when something behaves unexpectedly, confirm against `agy --help` on the user's installed version before concluding.

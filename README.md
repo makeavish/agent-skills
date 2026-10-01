@@ -1,20 +1,22 @@
 # agent-skills
 
-Personal Codex and Claude Code agent skills for writing, plan review, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Kilo Code CLI.
+Personal Codex and Claude Code agent skills for writing, plan review, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
 
 ## Available Skills
 
 | Skill | Description |
 |-------|-------------|
-| [antigravity-cli](plugins/personal/skills/antigravity-cli/SKILL.md) | General-purpose Antigravity CLI runner (`agy`, Google's successor to Gemini CLI) — code analysis, refactoring, and automated editing with model/autonomy/sandbox selection. |
-| [claude-cli](plugins/personal/skills/claude-cli/SKILL.md) | General-purpose Claude Code CLI runner (`claude`, `claude -p`) — code analysis, refactoring, reviews, automated editing, background agents, and structured output. Covers Fable 5.1, Opus 5, Sonnet 5, and Haiku 4.5. Defaults to Opus; multiple Fable instances require explicit cost confirmation. |
+| [antigravity-cli](plugins/personal/skills/antigravity-cli/SKILL.md) | General-purpose Antigravity CLI runner (`agy`, Google's successor to Gemini CLI) — code analysis, refactoring, and automated editing with model/autonomy/sandbox selection. Recommends Gemini 3.8 Flash when available, validates exact model slugs with `agy models`, and supports JSON output on current builds. |
+| [claude-cli](plugins/personal/skills/claude-cli/SKILL.md) | General-purpose Claude Code CLI runner (`claude`, `claude -p`) — code analysis, refactoring, reviews, automated editing, background agents, and structured output. Covers Fable 5.1, Opus 5.5, Sonnet 5.5, and Haiku 4.5, with provider-specific alias guidance. Defaults to Opus; multiple Fable instances require explicit cost confirmation. |
 | [chatgpt-pro](plugins/personal/skills/chatgpt-pro/SKILL.md) | Consults GPT-6 Pro when requested or proactively for stalled hard problems and consequential reasoning decisions. Works with Codex, Claude Code, and other agents with browser UI tools; preserves practical outputs and cross-agent handoffs. Prefers the user's default browser where ChatGPT is already logged in. |
-| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection for GPT-6 Astra (`gpt-6-astra`) and GPT-5.6 Sol, Terra, and Luna. Includes `max` effort and model-specific `ultra` support. |
-| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT-6 Astra and GPT-5.6 Sol, Terra, and Luna model options. |
-| [kilocode-cli](plugins/personal/skills/kilocode-cli/SKILL.md) | General-purpose Kilo Code CLI runner — code analysis, refactoring, reviews, and automated editing with model/agent/permission selection. |
+| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection for GPT-6 Astra (`gpt-6-astra`), GPT-6.1 Sol (`gpt-6.1-sol`), and GPT-6 Luna (`gpt-6-luna`). Includes `max` effort and model-specific `ultra` support. |
+| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna model options. |
+| [cursor-cli](plugins/personal/skills/cursor-cli/SKILL.md) | General-purpose Cursor CLI runner (`agent`, `cursor-agent`) — code analysis, reviews, planning, refactoring, and automated editing with account-specific model discovery, ask/plan modes, permissions, structured output, and session resume. |
 | [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. |
 
 ## Installation
+
+Plugin version: **1.11.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
 
 ### skills.sh
 
@@ -32,7 +34,7 @@ npx skills add makeavish/agent-skills --skill claude-cli
 npx skills add makeavish/agent-skills --skill chatgpt-pro
 npx skills add makeavish/agent-skills --skill codex
 npx skills add makeavish/agent-skills --skill codex-plan-review
-npx skills add makeavish/agent-skills --skill kilocode-cli
+npx skills add makeavish/agent-skills --skill cursor-cli
 npx skills add makeavish/agent-skills --skill writing
 ```
 
@@ -109,7 +111,7 @@ For difficult work, the skill calls for a focused Pro consultation after local i
 │           │   └── SKILL.md
 │           ├── codex-plan-review/
 │           │   └── SKILL.md
-│           ├── kilocode-cli/
+│           ├── cursor-cli/
 │           │   └── SKILL.md
 │           └── writing/
 │               ├── evals/
