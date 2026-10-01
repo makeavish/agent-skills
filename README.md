@@ -16,7 +16,7 @@ Personal Codex and Claude Code agent skills for writing, plan review, browser-ba
 
 ## Installation
 
-Plugin version: **1.11.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
+Plugin version: **1.10.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
 
 ### skills.sh
 
