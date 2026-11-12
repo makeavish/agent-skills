@@ -45,20 +45,21 @@ missing or pre-failing checks in the brief.
 
 ## 2. Start Codex
 
-Use the latest Sol model unless the user named a model. Do not hardcode an
-ID. Record provider, model, and effort only if exposed.
+Use the latest Sol model at `xhigh` reasoning effort unless the user named a
+model or effort. Do not hardcode a model ID. Record provider, model, and
+effort only if exposed.
 
-In T3 Code, call `orchestrator_capabilities` to resolve the model. Use
-`delegate_task` every round (`role: "review"`, `mode: "async"`). Save
-`taskId`. New `clientRequestId` per round. `childThreadId` is storage, not
-the next target. Do not use `t3_thread_send`, `create_threads`, or
-`t3_thread_launch` for review. If T3 tools are not listed, try one direct
-capability call.
+In T3 Code, call `orchestrator_capabilities` to resolve the model and how to
+set effort. Use `delegate_task` every round (`role: "review"`,
+`mode: "async"`). Save `taskId`. New `clientRequestId` per round.
+`childThreadId` is storage, not the next target. Do not use
+`t3_thread_send`, `create_threads`, or `t3_thread_launch` for review. If T3
+tools are not listed, try one direct capability call.
 
 Outside T3 Code, run Codex CLI with the commands from the `codex` skill:
-`codex exec` with `--sandbox read-only` at high effort. Skip that skill's
-setup questions unless the user named a model or effort. Save the session ID
-and resume that session for later rounds.
+`codex exec` with `--sandbox read-only` at `xhigh` effort. Skip that skill's
+setup questions; the defaults above answer them. Save the session ID and
+resume that session for later rounds.
 
 If no route runs Codex, report the blocker. Do not substitute another
 provider's model.

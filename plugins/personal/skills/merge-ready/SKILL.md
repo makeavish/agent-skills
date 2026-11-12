@@ -41,7 +41,7 @@ It does not grant:
    works. Fix the case that happened, not every case that could. If you are
    on the default branch, create a branch first.
 3. **Prove it.** See "Proof".
-4. **Get an independent review.** See "Independent review".
+4. **Review it.** See "Review".
 5. **File the PR.** See "Filing the PR".
 6. **Babysit the PR.** See "Babysitting".
 7. **Hand off** when the readiness gate passes. See "Readiness gate" and
@@ -68,47 +68,16 @@ Get proof again for each later fix before you push it, and after behavior
 changes or meaningful conflict fixes. If you cannot find a way to prove a
 change, ask the user.
 
-## Independent review
+## Review
 
-Have a model other than the one that wrote the change review it before you
-file the PR. Use the first route that works:
+Use the `codex-loop` skill to review the change before you file the PR. This
+request counts as asking to ship, so push once the loop agrees, and add its
+`Reviewed with codex-loop` line to the PR description.
 
-1. In T3 Code, `delegate_task` with a review role on another provider's
-   model.
-2. A CLI skill for another provider: `codex` when you are Claude,
-   `claude-cli` when you are Codex, or `cursor-cli` or `antigravity-cli`.
-3. A subagent with fresh context on your own model. Say in the handoff that
-   the review was not cross-model.
-
-Find the base with `git fetch origin` and
-`git merge-base HEAD origin/<default-branch>`. Do not edit the reviewed files
-while a round runs. Send this brief, because the reviewer has no history:
-
-```
-Review only. Do not edit, commit, push, comment on PRs, or start subagents.
-Repo: <abs path> Base: <sha> Intent: <intent> Out of scope: <scope> Checks: <results>
-See: git diff <base>; git status --short (read untracked files).
-Read the surrounding code. Find bugs, broken callers, and mismatch with intent.
-Skip style unless it hides a bug. Hold to the smallest change.
-blocker = intended case wrong. should = real bug callers will hit. nit = rest.
-Reply:
-VERDICT: APPROVE or CHANGES
-R1 [blocker|should|nit] <file>:<line> <claim>. Fix: <suggestion>
-```
-
-Check each finding and its severity yourself.
-
-- **Agree:** make the smallest fix. Prefer deleting or narrowing code over a
-  new helper, option, or guard.
-- **Disagree:** say why with evidence (file and line, a test, output).
-- **Nit or out of scope:** decline in one line and list it as a follow-up.
-
-Run at most 3 rounds. Later rounds cover only changed code and open findings.
-Start another round only while a blocker or should is open, or behavior code
-changed after the last approval. Stop early when a round returns only nits. A
-timeout, an error, or no reply is not approval. If an item stays disputed
-after two replies, or the rounds run out, the review did not approve. Report
-both sides in the handoff.
+Run the loop again when behavior code changes after its approval, for example
+after a fix during babysitting. A timeout, an error, or no reply is not
+approval. If the loop ends stuck or out of budget, the review did not approve.
+Report both sides in the handoff. If no route runs Codex, ask the user.
 
 ## Filing the PR
 
@@ -157,7 +126,7 @@ and mergeability. All of these must be true on the latest commit:
 - Required checks are green.
 - Review bots have finished, and each finding is fixed or dismissed with a
   written reason.
-- The independent review approved the current behavior diff.
+- The `codex-loop` review approved the current behavior diff.
 - No human review still requests changes.
 - The branch is up to date with the default branch, and GitHub reports it as
   mergeable.
