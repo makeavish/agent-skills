@@ -1,6 +1,6 @@
 {
   "name": "personal",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "Personal writing and agent-collaboration skills for Codex",
   "author": {
     "name": "makeavish",
@@ -17,8 +17,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Makeavish Skills",
-    "shortDescription": "Write polished prose and coordinate CLI and browser-based agent peers.",
-    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, and coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Cursor CLI for analysis, reviews, refactoring, and automated editing.",
+    "shortDescription": "Write polished prose, coordinate agent peers, and take changes to merge-ready PRs.",
+    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Cursor CLI for analysis, reviews, refactoring, and automated editing, and taking a change unattended to a proven, reviewed pull request that is ready for you to merge.",
     "developerName": "makeavish",
     "category": "Productivity",
     "capabilities": [
@@ -27,7 +27,8 @@
       "Plan review",
       "Prose drafting and revision",
       "Refactoring",
-      "Automated editing"
+      "Automated editing",
+      "Merge-ready pull requests"
     ],
     "websiteURL": "https://github.com/makeavish/agent-skills",
     "defaultPrompt": [
@@ -35,7 +36,8 @@
       "Use Codex CLI to review this implementation plan.",
       "Run a second-opinion code analysis with Claude Code CLI.",
       "Consult GPT-6 Pro when a hard problem needs deeper analysis and leave a resumable agent handoff.",
-      "Choose the right coding-agent CLI for this task."
+      "Choose the right coding-agent CLI for this task.",
+      "Take this change to a merge-ready PR and stop before merging."
     ]
   }
 }

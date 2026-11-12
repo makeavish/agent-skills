@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Codex and Claude Code agent skills for writing, plan review, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
+Personal Codex and Claude Code agent skills for writing, plan review, unattended merge-ready pull requests, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
 
 ## Available Skills
 
@@ -12,11 +12,12 @@ Personal Codex and Claude Code agent skills for writing, plan review, browser-ba
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection for GPT-6 Astra (`gpt-6-astra`), GPT-6.1 Sol (`gpt-6.1-sol`), and GPT-6 Luna (`gpt-6-luna`). Includes `max` effort and model-specific `ultra` support. |
 | [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna model options. |
 | [cursor-cli](plugins/personal/skills/cursor-cli/SKILL.md) | General-purpose Cursor CLI runner (`agent`, `cursor-agent`) — code analysis, reviews, planning, refactoring, and automated editing with account-specific model discovery, ask/plan modes, permissions, structured output, and session resume. Suggests Composer, Muse, and Grok models; defaults to Composer. |
+| [merge-ready](plugins/personal/skills/merge-ready/SKILL.md) | Takes a change to a pull request with nobody watching: proves it, gets an independent cross-model review, files the PR, and babysits CI and review bots. Stops when the PR is ready for you to merge and never merges it. Adapted from `full-stop` in [t3dotgg/tstack](https://github.com/t3dotgg/tstack). |
 | [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. |
 
 ## Installation
 
-Plugin version: **1.10.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
+Plugin version: **1.11.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
 
 ### skills.sh
 
@@ -35,6 +36,7 @@ npx skills add makeavish/agent-skills --skill chatgpt-pro
 npx skills add makeavish/agent-skills --skill codex
 npx skills add makeavish/agent-skills --skill codex-plan-review
 npx skills add makeavish/agent-skills --skill cursor-cli
+npx skills add makeavish/agent-skills --skill merge-ready
 npx skills add makeavish/agent-skills --skill writing
 ```
 
@@ -113,6 +115,8 @@ For difficult work, the skill calls for a focused Pro consultation after local i
 │           │   └── SKILL.md
 │           ├── cursor-cli/
 │           │   └── SKILL.md
+│           ├── merge-ready/
+│           │   └── SKILL.md
 │           └── writing/
 │               ├── evals/
 │               │   └── evals.json
@@ -139,6 +143,10 @@ Conventions:
 - `name` in frontmatter must exactly match the directory name
 - `description` should explain both what the skill does and when it should trigger
 - Move reference material into `references/` subdirectory when the SKILL.md gets large
+
+## Credits
+
+The `merge-ready` skill is adapted from `full-stop` and the skills it builds on in [t3dotgg/tstack](https://github.com/t3dotgg/tstack) by Theo Browne, used under the MIT license.
 
 ## License
 
