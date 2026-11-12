@@ -1,6 +1,6 @@
 # agent-skills
 
-Personal Codex and Claude Code agent skills for writing, plan review, unattended merge-ready pull requests, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
+Personal Codex and Claude Code agent skills for writing, plan review, Codex review loops, unattended merge-ready pull requests, pull request upkeep, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
 
 ## Available Skills
 
@@ -10,14 +10,17 @@ Personal Codex and Claude Code agent skills for writing, plan review, unattended
 | [claude-cli](plugins/personal/skills/claude-cli/SKILL.md) | General-purpose Claude Code CLI runner (`claude`, `claude -p`) — code analysis, refactoring, reviews, automated editing, background agents, and structured output. Covers Fable 5.1, Opus 5.5, Sonnet 5.5, and Haiku 4.5, with provider-specific alias guidance. Defaults to Opus; multiple Fable instances require explicit cost confirmation. |
 | [chatgpt-pro](plugins/personal/skills/chatgpt-pro/SKILL.md) | Consults GPT-6 Pro when requested or proactively for stalled hard problems and consequential reasoning decisions. Works with Codex, Claude Code, and other agents with browser UI tools; preserves practical outputs and cross-agent handoffs. Prefers the user's default browser where ChatGPT is already logged in. |
 | [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection for GPT-6 Astra (`gpt-6-astra`), GPT-6.1 Sol (`gpt-6.1-sol`), and GPT-6 Luna (`gpt-6-luna`). Includes `max` effort and model-specific `ultra` support. |
+| [codex-loop](plugins/personal/skills/codex-loop/SKILL.md) | Reviews a change with Codex in a loop until both agents agree: up to 3 rounds by default, a findings ledger, and the smallest fix for each real finding. Runs through T3 Code delegation or Codex CLI. |
 | [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna model options. |
 | [cursor-cli](plugins/personal/skills/cursor-cli/SKILL.md) | General-purpose Cursor CLI runner (`agent`, `cursor-agent`) — code analysis, reviews, planning, refactoring, and automated editing with account-specific model discovery, ask/plan modes, permissions, structured output, and session resume. Suggests Composer, Muse, and Grok models; defaults to Composer. |
-| [merge-ready](plugins/personal/skills/merge-ready/SKILL.md) | Takes a change to a pull request with nobody watching: proves it, gets an independent cross-model review, files the PR, and babysits CI and review bots. Stops when the PR is ready for you to merge and never merges it. Adapted from `full-stop` in [t3dotgg/tstack](https://github.com/t3dotgg/tstack). |
+| [leaving-pr-comments](plugins/personal/skills/leaving-pr-comments/SKILL.md) | Formats comments that an agent posts on GitHub on your behalf: an attribution callout, then a direct reply that leads with the conclusion. |
+| [merge-ready](plugins/personal/skills/merge-ready/SKILL.md) | Takes a change to a pull request with nobody watching: proves it, reviews it with `codex-loop`, files the PR, and babysits CI and review bots. Stops when the PR is ready for you to merge and never merges it. |
+| [modernize](plugins/personal/skills/modernize/SKILL.md) | Brings an old PR up to date and decides whether it should still exist: recommends modernize, rework, or close, then rebases and pushes only when the PR still belongs. |
 | [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. |
 
 ## Installation
 
-Plugin version: **1.11.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
+Plugin version: **1.12.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
 
 ### skills.sh
 
@@ -34,11 +37,16 @@ npx skills add makeavish/agent-skills --skill antigravity-cli
 npx skills add makeavish/agent-skills --skill claude-cli
 npx skills add makeavish/agent-skills --skill chatgpt-pro
 npx skills add makeavish/agent-skills --skill codex
+npx skills add makeavish/agent-skills --skill codex-loop
 npx skills add makeavish/agent-skills --skill codex-plan-review
 npx skills add makeavish/agent-skills --skill cursor-cli
+npx skills add makeavish/agent-skills --skill leaving-pr-comments
 npx skills add makeavish/agent-skills --skill merge-ready
+npx skills add makeavish/agent-skills --skill modernize
 npx skills add makeavish/agent-skills --skill writing
 ```
+
+Some skills call others. When installing individually, install the ones they need too: `merge-ready` uses `codex-loop` and `leaving-pr-comments`, `modernize` uses `leaving-pr-comments`, and `codex-loop` uses `codex` outside T3 Code.
 
 ### Claude Code
 
@@ -111,11 +119,17 @@ For difficult work, the skill calls for a focused Pro consultation after local i
 │           │   └── SKILL.md
 │           ├── codex/
 │           │   └── SKILL.md
+│           ├── codex-loop/
+│           │   └── SKILL.md
 │           ├── codex-plan-review/
 │           │   └── SKILL.md
 │           ├── cursor-cli/
 │           │   └── SKILL.md
+│           ├── leaving-pr-comments/
+│           │   └── SKILL.md
 │           ├── merge-ready/
+│           │   └── SKILL.md
+│           ├── modernize/
 │           │   └── SKILL.md
 │           └── writing/
 │               ├── evals/
@@ -146,7 +160,7 @@ Conventions:
 
 ## Credits
 
-The `merge-ready` skill is adapted from `full-stop` and the skills it builds on in [t3dotgg/tstack](https://github.com/t3dotgg/tstack) by Theo Browne, used under the MIT license.
+The `codex-loop`, `leaving-pr-comments`, `merge-ready`, and `modernize` skills come from [t3dotgg/tstack](https://github.com/t3dotgg/tstack) by Theo Browne, used under the MIT license. `merge-ready` is adapted from `full-stop` and the skills it builds on, and `codex-loop` from `sol-loop`; the others are adopted with small changes.
 
 ## License
 
