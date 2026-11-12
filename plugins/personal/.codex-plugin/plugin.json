@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Makeavish Skills",
     "shortDescription": "Write polished prose, coordinate agent peers, and review, ship, and maintain PRs.",
-    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Cursor CLI for analysis, reviews, refactoring, and automated editing, taking a change unattended to a proven, reviewed pull request that is ready for you to merge, running a three-provider council review, bringing old pull requests up to date, and formatting agent-authored PR comments.",
+    "longDescription": "Skills for drafting and revising human-facing prose, proactively consulting GPT-6 Pro on hard problems through an authenticated browser with portable agent handoffs, coordinating Codex CLI, Claude Code CLI, Antigravity CLI, and Cursor CLI for analysis, reviews, refactoring, and automated editing, taking a change unattended to a proven, reviewed pull request that is ready for you to merge, reviewing a change with Codex in a loop until both agents agree, bringing old pull requests up to date, and formatting agent-authored PR comments.",
     "developerName": "makeavish",
     "category": "Productivity",
     "capabilities": [
@@ -29,7 +29,7 @@
       "Refactoring",
       "Automated editing",
       "Merge-ready pull requests",
-      "Multi-model council review",
+      "Codex review loop",
       "Pull request upkeep"
     ],
     "websiteURL": "https://github.com/makeavish/agent-skills",
