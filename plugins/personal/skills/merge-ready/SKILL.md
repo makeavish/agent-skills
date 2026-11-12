@@ -145,16 +145,8 @@ Keep the PR at the size the goal needs. Decline unneeded tests, guards for
 edge cases that do not matter, and small performance costs, and list them as
 follow-ups. If another PR makes this one obsolete, stop and ask the user.
 
-Start each comment you post on the user's behalf with this callout, then the
-comment itself:
-
-```md
-> [!NOTE]
-> 🤖 **<model> responding on behalf of <user>**
-```
-
-Use the model name the harness reports, or the harness name when it reports
-none. Lead with the conclusion, cite the code or check, and skip filler.
+Use the `leaving-pr-comments` skill for every comment you post on the user's
+behalf.
 
 ## Readiness gate
 
