@@ -1,6 +1,6 @@
 ---
 name: writing
-description: Draft, rewrite, critique, or unblock human-facing prose while preserving facts, intent, and authorial voice. Use whenever the user asks to write or improve an essay, article, blog post, memo, email, explanation, documentation, speech, story, scene, or dialogue; asks about prose clarity, flow, structure, rhythm, specificity, engagement, hooks, writer's block, or "show, don't tell"; or supplies prose for craft or style feedback. Do not use for source code, accuracy-only review, pure transcription, or translation unless prose craft is also part of the request.
+description: Draft, rewrite, critique, or unblock human-facing prose while preserving facts, intent, and authorial voice. Use whenever the user asks to write or improve an essay, article, blog post, memo, email, explanation, documentation, speech, story, scene, or dialogue; asks to write or improve short items that people scan as a set, such as headings, titles, subject lines, bullet lists, changelog entries, release notes, or status updates; asks about prose clarity, flow, structure, rhythm, specificity, engagement, hooks, writer's block, or "show, don't tell"; or supplies prose for craft or style feedback. Do not use for source code, accuracy-only review, pure transcription, or translation unless prose craft is also part of the request.
 ---
 
 # Writing
@@ -27,6 +27,7 @@ Before editing, determine:
 - What form and length does the situation require?
 - What voice already belongs to the writer?
 - Is this nonfiction, fiction, or a hybrid?
+- Which parts will be read in order, and which will be scanned as a set, such as headings, lists, titles, and subject lines?
 
 Keep claims, numbers, quotations, citations, names, links, Markdown, and technical meaning intact unless the user asks to change them. Do not invent evidence, anecdotes, credentials, sources, or lived experience to make a piece livelier. Use an explicit placeholder when essential material is missing.
 
@@ -57,6 +58,7 @@ For a short rewrite, compress these passes mentally rather than narrating them t
 - If the opening raises a question or promises a result, pay it off. Curiosity without delivery feels like clickbait.
 - Give each paragraph an explicit or implied mini-thesis. If a paragraph makes two unrelated moves, split it. If it makes none, strengthen or remove it.
 - Test a long argument by listing its paragraph mini-theses in order. They should form a coherent compressed version of the piece.
+- Test a long document's skeleton the same way: read only the title, headings, and link text. A reader who sees nothing else should be able to find the part that answers their question and predict what each section or link holds.
 - Put related ideas near one another. Introduce context before the detail that depends on it; move from given information to new information.
 - Start a difficult explanation with a concrete case. Use more than one example when readers need to triangulate the underlying idea.
 - Name recurring complex ideas with memorable, accurate concept handles, then use those handles consistently.
@@ -76,7 +78,7 @@ For a short rewrite, compress these passes mentally rather than narrating them t
 
 Examples:
 
-- `I could see the neighbor's greyhound moving across the road.` -> `The neighbor's greyhound loped across the road.`
+- `I could see the neighbor's greyhound loping across the road.` -> `The neighbor's greyhound loped across the road.`
 - `The rollout was somewhat delayed in nature.` -> `The rollout was delayed.`
 - `She checked the clock twice and wiped her palm on her jeans. She felt anxious.` -> `She checked the clock twice and wiped her palm on her jeans.`
 
@@ -86,10 +88,10 @@ Choose active or passive voice according to what belongs in the reader's mental 
 
 ### Create rhythm
 
-- Vary sentence length and sentence openings so the prose does not drone.
+- In running prose, vary sentence length and sentence openings so the prose does not drone.
 - Use short sentences for emphasis and longer ones when the reader can follow the build.
 - Preserve parallel structure when it clarifies a comparison or creates deliberate momentum.
-- Treat repeated words or syntax as conspicuous. Keep repetition when it emphasizes the point; revise it when it is accidental.
+- Treat repeated words or syntax as conspicuous. Keep repetition when it emphasizes the point; revise it when it is accidental. When the repeated word names a thing, keep the name and restructure the sentence instead of swapping in a synonym; a new word makes the reader look for a new thing.
 - Read the passage aloud, or simulate doing so, to catch breathless clauses, awkward cadence, and hidden ambiguity.
 
 ### Remove ambiguity
@@ -110,7 +112,7 @@ Reward attention with some combination of useful insight, concrete detail, surpr
 - Shorten or strengthen stretches that offer no new insight, example, consequence, or pleasure.
 - Use microhumor only when it fits the writer and context. A legal warning, incident report, or apology usually needs restraint.
 - Keep hooks honest and specific. Do not exaggerate stakes the body cannot support.
-- Put the sharpest word late in a sentence when doing so improves emphasis without distorting natural syntax.
+- In running prose, put the sharpest word late in a sentence when doing so improves emphasis without distorting natural syntax.
 
 ## Nonfiction pass
 
@@ -139,6 +141,26 @@ For stories, scenes, and dialogue, apply only the tools relevant to the user's g
 - Introduce only the worldbuilding the scene needs. Deepen existing elements before adding new ones, and consider how a fantastic premise changes ordinary behavior and institutions.
 - Treat theme as tension between ideals the story can genuinely respect, not a contest between a full person and a caricature.
 
+## Scanned-items pass
+
+Apply this to any part of a piece that readers scan as a set instead of reading in order: headings, bullet lists, titles, subject lines, changelog entries, table cells, status lines, and summary cards. It applies inside nonfiction and fiction alike; an article can need varied rhythm in its paragraphs and one form across its headings. Two rules for running prose reverse here: sameness, not variation, makes a set fast to read, and the important words go first, not last.
+
+- Decide the shared form before drafting, then review the items side by side for drifting terms, repeated openers, and uneven detail. When adding to an existing set, read its neighbors first and match their convention.
+- Give every item the same grammatical form. Start with the subject or the verb, and drop a subject that every item shares.
+- Open each item with what distinguishes it from its neighbors for the reader's task: the component when they look something up, the status when they triage. A verb that every item shares is a shared opener, so move it or drop it.
+- Use one term for each thing across the set. A new word makes the reader look for a new thing.
+- Keep the same components in the same order, and vary only where the items differ in fact. Tense follows each item's state, so a set that mixes finished and planned work mixes tenses. A detail that appears in only one item reads as significant: keep it when it is, and in a close rewrite flag it instead of cutting it when it is not.
+- Do not invent content to fill a slot that other items have. A missing value stays missing.
+- Let the opening match the item's verdict. An item that mostly reports problems should not open on praise.
+
+Example, for a changelog:
+
+- `New: dark mode` -> `Added dark mode`
+- `Fixed the crash on export` -> `Fixed the crash on export`
+- `We will remove the legacy importer in 3.0` -> `Will remove the legacy importer in 3.0`
+
+Each entry now starts with a verb, and the tense still separates what shipped from what is planned.
+
 ## Deliver the result
 
 Match the response to the requested mode:
@@ -159,9 +181,12 @@ Before returning prose, ask:
 - Are complicated ideas grounded in examples?
 - Can any sentence be misread on the first pass?
 - Are specificity, concision, rhythm, and repetition serving the intended voice?
+- Do the scanned parts share one form, and does each item open with what sets it apart?
 - Does the piece keep its promises and earn its conclusion?
 - Did the edit preserve facts, uncertainty, citations, and the writer's identity?
 
 ## Source
 
 This workflow distills the craft heuristics collected in [Chad Nauseam's writing advice](https://chadnauseam.com/advice/writing-advice). The source is an anthology of sometimes competing advice, so apply its ideas as contextual tests rather than universal commandments.
+
+The scanned-items pass adapts Shreya Shankar's [Five Principles for Generating Readable AI Text in Bulk](https://fsdatalab.github.io/blog/agent-text-at-scale/). The post extends research on sentence parsing and web scanning to sets of items, so apply its rules as contextual tests as well.

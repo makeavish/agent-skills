@@ -16,11 +16,11 @@ Personal Codex and Claude Code agent skills for writing, plan review, Codex revi
 | [leaving-pr-comments](plugins/personal/skills/leaving-pr-comments/SKILL.md) | Formats comments that an agent posts on GitHub on your behalf: an attribution callout, then a direct reply that leads with the conclusion. |
 | [merge-ready](plugins/personal/skills/merge-ready/SKILL.md) | Takes a change to a pull request with nobody watching: proves it, reviews it with `codex-loop`, files the PR, and babysits CI and review bots. Stops when the PR is ready for you to merge and never merges it. |
 | [modernize](plugins/personal/skills/modernize/SKILL.md) | Brings an old PR up to date and decides whether it should still exist: recommends modernize, rework, or close, then rebases and pushes only when the PR still belongs. |
-| [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. |
+| [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. Includes a pass for headings, lists, titles, and other short items that readers scan as a set. |
 
 ## Installation
 
-Plugin version: **1.12.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
+Plugin version: **1.13.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
 
 ### skills.sh
 
