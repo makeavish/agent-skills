@@ -76,7 +76,7 @@ For a short rewrite, compress these passes mentally rather than narrating them t
 
 Examples:
 
-- `I could see the neighbor's greyhound moving across the road.` -> `The neighbor's greyhound loped across the road.`
+- `I could see the neighbor's greyhound loping across the road.` -> `The neighbor's greyhound loped across the road.`
 - `The rollout was somewhat delayed in nature.` -> `The rollout was delayed.`
 - `She checked the clock twice and wiped her palm on her jeans. She felt anxious.` -> `She checked the clock twice and wiped her palm on her jeans.`
 
