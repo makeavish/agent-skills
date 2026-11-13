@@ -66,6 +66,36 @@
         "The draft avoids stock importance claims and unattributed authority, including 'pivotal moment', 'game changer', 'transformative', and 'experts agree'.",
         "The response contains only the draft and maintains a direct, mildly skeptical voice."
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "Rewrite these status lines for our weekly infra update. People scan the list to find their own service and see whether anything needs them. Keep every fact. Return only the list.\n\n- The migration of the payments service to the new cluster has been completed.\n- We are currently in the process of migrating search, and it is about 60% done.\n- Auth: migration will be started next week.\n- For the billing service, the move was finished, but note that invoices generated on v2.3.1 are still failing and have to be re-run by hand.\n- Notifications is being moved over now.\n- The reporting app has not been scheduled yet.",
+      "expected_output": "A list in one shared form that opens each item with its service name, keeps the different migration states and the billing exception, uses one term for the migration, and adds no detail the source lacks.",
+      "files": [],
+      "expectations": [
+        "Every item opens with its service name, with no shared lead-in such as 'The migration of', 'We are currently', or 'For the' before it.",
+        "All six items follow one shared pattern, for example `Service: status`.",
+        "The items keep their different states: payments and billing finished, search and notifications in progress, auth starting next week, and reporting not yet scheduled.",
+        "The billing item keeps its exception: invoices generated on v2.3.1 are still failing and have to be re-run by hand.",
+        "Search keeps its 60% figure, and no other item gains a percentage, date, version, or other detail that the source does not state.",
+        "The list uses one term for the migration throughout; it does not alternate among 'migration', 'move', and 'moved over'.",
+        "The response contains only the list."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Edit this short internal doc for clarity. Keep every fact and keep my voice. Return only the edited doc.\n\n# Rotating API keys\n\n## Why do keys expire?\n\nIt should be noted that keys expire after 90 days. That is short on purpose. A leaked key that stops working in three months does less damage than one that works forever, and most leaks are found late.\n\n## Key rotation steps\n\nCreate the new key in the console before you revoke the old one. Basically, both keys work during the overlap period of time, so deploys do not fail. Update the secret in the deploy config, then roll each service. Revoke the old key last.\n\n## If something goes wrong\n\nA service that still uses the old key returns 401 after revocation. Check the secret's version in the deploy config first. Nine times out of ten the service was not rolled.\n\n## Auditing\n\nIn terms of auditing, the console logs every key creation and revocation. Logs are kept for one year.",
+      "expected_output": "An edited doc whose headings share one grammatical form while its paragraphs stay as varied running prose, with every fact and the writer's plain voice preserved.",
+      "files": [],
+      "expectations": [
+        "The four section headings share one grammatical form, for example all questions, all noun phrases, or all verb phrases.",
+        "Each heading still identifies its section: why keys expire, how to rotate a key, what to do when rotation fails, and auditing.",
+        "Every fact is preserved: keys expire after 90 days, on purpose; a key that stops working in three months does less damage, and most leaks are found late; create the new key before revoking the old one; both keys work during the overlap, so deploys do not fail; update the secret in the deploy config, then roll each service; revoke the old key last; a service on the old key returns 401 after revocation; check the secret's version in the deploy config first; the usual cause is a service that was not rolled; the console logs every key creation and revocation; logs are kept for one year.",
+        "Explanatory paragraphs remain running prose with varied sentence lengths and openings; they are not rewritten into uniform parallel sentences or fragment bullets. A numbered list for the rotation steps is acceptable.",
+        "The filler phrases 'It should be noted that', 'Basically', 'period of time', and 'In terms of auditing' are removed.",
+        "The writer's plain, direct voice survives, including a short sentence saying the 90-day limit is deliberate.",
+        "The response contains only the edited doc, with its title retained."
+      ]
     }
   ]
 }
