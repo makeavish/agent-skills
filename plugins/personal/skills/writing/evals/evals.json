@@ -96,6 +96,23 @@
         "The writer's plain, direct voice survives, including a short sentence saying the 90-day limit is deliberate.",
         "The response contains only the edited doc, with its title retained."
       ]
+    },
+    {
+      "id": 8,
+      "prompt": "Rewrite this update before I post it in the team channel. The readers are engineers who did not work on this and want to know whether the fix is safe to deploy. Keep every fact. Return only the rewrite.\n\nA checkout timeout report investigation was carried out by me this morning. Reliability is ultimately a question of how a system behaves when the things it depends on do not. A determination was made by me that the cause was the payment client's failed call retry behavior: it retries every failed call twice with no delay, and during Tuesday's outage this resulted in a tripling of payment gateway load. An addition of delays between retries has been made by me, so that they now wait 200 ms, then 400 ms. Verification of the change was performed by me against a replay of Tuesday's traffic, in which gateway load stayed under the limit. The fix is safe to deploy, although the replay did not cover the refund flow, which also uses the payment client.",
+      "expected_output": "An update that opens with the verdict, keeps the refund-flow caveat, and then explains the cause, the change, and the verification in sentences where the writer or the payment client performs a verb, with the noun stacks unpacked, the empty reflection removed, and every fact preserved.",
+      "files": [],
+      "expectations": [
+        "The rewrite says that the fix is safe to deploy within its first two sentences, before the account of the investigation.",
+        "The rewrite keeps the caveat: the replay did not cover the refund flow, which also uses the payment client.",
+        "Every other fact is preserved: the writer investigated the checkout timeout reports this morning; the payment client retried (or retries) every failed call twice with no delay; during Tuesday's outage this tripled the load on the payment gateway; retries now wait 200 ms, then 400 ms; the writer verified the change against a replay of Tuesday's traffic; and gateway load stayed under the limit in that replay.",
+        "Actions appear as verbs with their actor as the subject: the writer investigated, found the cause, added the delays, and verified the change. The rewrite does not use 'investigation was carried out', 'A determination was made', 'An addition of delays', 'Verification of the change was performed', or 'resulted in a tripling'.",
+        "The noun stacks 'checkout timeout report investigation' and 'failed call retry behavior' are unpacked into plain clauses.",
+        "The established terms 'payment client', 'payment gateway', and 'refund flow' are kept as written.",
+        "The sentence saying that reliability is 'ultimately a question of' how a system behaves is removed, and no other general reflection replaces it.",
+        "The rewrite introduces no unsupported cause, metric, recommendation, or other fact.",
+        "The response contains only the rewrite."
+      ]
     }
   ]
 }
