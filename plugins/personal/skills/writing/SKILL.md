@@ -56,30 +56,36 @@ For a short rewrite, compress these passes mentally rather than narrating them t
 
 - Open with a substantive observation, concrete situation, consequential claim, or honest unanswered question. Avoid throat-clearing, dictionary openings, and claims about what people have believed "throughout history."
 - If the opening raises a question or promises a result, pay it off. Curiosity without delivery feels like clickbait.
+- When the reader came with a question, as in a reply, report, or summary, give the answer or decision first, with only the context needed to understand it, and the support after it. Keep a slower build for pieces read for the journey, such as an essay or a story. Inside a scanned set, the scanned-items pass decides what each item opens with.
 - Give each paragraph an explicit or implied mini-thesis. If a paragraph makes two unrelated moves, split it. If it makes none, strengthen or remove it.
 - Test a long argument by listing its paragraph mini-theses in order. They should form a coherent compressed version of the piece.
 - Test a long document's skeleton the same way: read only the title, headings, and link text. A reader who sees nothing else should be able to find the part that answers their question and predict what each section or link holds.
 - Put related ideas near one another. Introduce context before the detail that depends on it; move from given information to new information.
 - Start a difficult explanation with a concrete case. Use more than one example when readers need to triangulate the underlying idea.
-- Name recurring complex ideas with memorable, accurate concept handles, then use those handles consistently.
+- Name recurring complex ideas with memorable, accurate concept handles, define each handle at first use, then use those handles consistently. A label coined while working, in notes, code, or an earlier conversation, is not a handle until the reader has met it; define it or write out what it stands for.
 - Make relationships explicit: evidence for a claim, objection and response, cause and effect, step and consequence.
 - Keep paragraphs compact enough to scan, but do not enforce a sentence limit when an argument or emotional beat needs room.
-- End sections on an insight, consequence, decision, image, or question that creates useful forward motion.
+- End sections on an insight, consequence, decision, image, or question that creates useful forward motion. When the last sentence of substance already does this, stop there; do not add a closing line that restates the section or only sounds profound.
 
 ## Edit the sentences
 
 ### Increase information value
 
 - Prefer specific nouns and strong verbs when they add real information.
+- Prefer the plain word when it means the same: `asked`, not `submitted a request`; `the laptop`, not `the computing device`. Keep the exact technical term and the writer's own diction.
 - Remove filters and qualifiers that contribute neither meaning nor voice.
 - Turn dummy constructions into direct subject-verb claims: `X is something that helps Y` becomes `X helps Y`.
+- Put the action in a verb. An action turned into a noun buries the verb, and the passive that often comes with it drops the actor: `made a decision to` buries `decided`, and `a review was conducted` does not say who reviewed. Make the actor the subject when the source names one; in a rewrite, do not supply an actor the source leaves out. Keep the noun when it names something the next sentence picks up, as in `That decision cost a week`, and see Control attention for when the passive is the better choice.
 - Cut duplicate meaning, not necessary context, atmosphere, or emotional processing time.
+- In nonfiction, ask what each sentence gives the reader: a fact, a step, a reason, an example, a consequence, or orientation. Cut a sentence that only sounds meaningful and makes no claim the piece depends on, such as `In the end, a deadline is only as real as the people who keep it`. This test does not apply to a joke, an image, or a beat that the piece's voice depends on.
+- When side points crowd a sentence's main point, move them into their own sentences. A long sentence the reader can follow is fine.
 - Move down the ladder of abstraction when the reader needs to picture or test a claim.
 
 Examples:
 
 - `I could see the neighbor's greyhound loping across the road.` -> `The neighbor's greyhound loped across the road.`
 - `The rollout was somewhat delayed in nature.` -> `The rollout was delayed.`
+- `The team made a decision to carry out a migration of the database.` -> `The team decided to migrate the database.`
 - `She checked the clock twice and wiped her palm on her jeans. She felt anxious.` -> `She checked the clock twice and wiped her palm on her jeans.`
 
 ### Control attention
@@ -98,7 +104,7 @@ Choose active or passive voice according to what belongs in the reader's mental 
 
 Check pronouns, modifiers, attachment, scope, chronology, and transitions at sentence and sub-sentence level. Rewrite any sentence that invites a plausible wrong reading before the intended reading becomes clear.
 
-Prefer `because` when causal `since` could initially be read as temporal. Replace stacked nouns or unexplained abbreviations when they force the reader to decode rather than understand.
+Prefer `because` when causal `since` could initially be read as temporal. Replace stacked nouns or unexplained abbreviations when they force the reader to decode rather than understand. Three or more nouns in a row is the usual sign of a stack: unpack it into a short clause with a verb, so `cache invalidation failure alert` becomes `an alert that fires when cache invalidation fails`. Leave intact an established term the reader already uses, such as `content delivery network`. If you cannot tell what a stack means, flag it instead of guessing.
 
 ### Make technical prose hospitable
 
@@ -180,13 +186,10 @@ Before returning prose, ask:
 - Does new information arrive after the context needed to understand it?
 - Are complicated ideas grounded in examples?
 - Can any sentence be misread on the first pass?
+- Where a sentence reports an action, is the action a verb, with the actor named when the source names one?
+- Did a coined label or a noun stack slip in that the reader would have to decode?
+- In nonfiction, does each sentence give the reader something?
 - Are specificity, concision, rhythm, and repetition serving the intended voice?
 - Do the scanned parts share one form, and does each item open with what sets it apart?
 - Does the piece keep its promises and earn its conclusion?
 - Did the edit preserve facts, uncertainty, citations, and the writer's identity?
-
-## Source
-
-This workflow distills the craft heuristics collected in [Chad Nauseam's writing advice](https://chadnauseam.com/advice/writing-advice). The source is an anthology of sometimes competing advice, so apply its ideas as contextual tests rather than universal commandments.
-
-The scanned-items pass adapts Shreya Shankar's [Five Principles for Generating Readable AI Text in Bulk](https://fsdatalab.github.io/blog/agent-text-at-scale/). The post extends research on sentence parsing and web scanning to sets of items, so apply its rules as contextual tests as well.
