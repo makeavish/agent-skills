@@ -1,4 +1,4 @@
-# agent-skills
+# vstack
 
 Personal Codex and Claude Code agent skills for writing, plan review, Codex review loops, unattended merge-ready pull requests, pull request upkeep, browser-based GPT-6 Pro collaboration, and working with Claude Code CLI, OpenAI Codex CLI, Google Antigravity CLI, and Cursor CLI.
 
