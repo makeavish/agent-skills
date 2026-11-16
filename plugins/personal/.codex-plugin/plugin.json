@@ -6,7 +6,7 @@
     "name": "makeavish",
     "url": "https://github.com/makeavish"
   },
-  "repository": "https://github.com/makeavish/agent-skills",
+  "repository": "https://github.com/makeavish/vstack",
   "license": "MIT",
   "keywords": [
     "agent-skills",
@@ -32,7 +32,7 @@
       "Codex review loop",
       "Pull request upkeep"
     ],
-    "websiteURL": "https://github.com/makeavish/agent-skills",
+    "websiteURL": "https://github.com/makeavish/vstack",
     "defaultPrompt": [
       "Rewrite this draft for clarity while preserving my voice.",
       "Use Codex CLI to review this implementation plan.",

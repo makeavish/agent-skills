@@ -27,23 +27,23 @@ Plugin version: **1.14.0**. Model guidance checked on **2026-10-01**; availabili
 Install all skills:
 
 ```sh
-npx skills add makeavish/agent-skills
+npx skills add makeavish/vstack
 ```
 
 Install individual skills:
 
 ```sh
-npx skills add makeavish/agent-skills --skill antigravity-cli
-npx skills add makeavish/agent-skills --skill claude-cli
-npx skills add makeavish/agent-skills --skill chatgpt-pro
-npx skills add makeavish/agent-skills --skill codex
-npx skills add makeavish/agent-skills --skill codex-loop
-npx skills add makeavish/agent-skills --skill codex-plan-review
-npx skills add makeavish/agent-skills --skill cursor-cli
-npx skills add makeavish/agent-skills --skill leaving-pr-comments
-npx skills add makeavish/agent-skills --skill merge-ready
-npx skills add makeavish/agent-skills --skill modernize
-npx skills add makeavish/agent-skills --skill writing
+npx skills add makeavish/vstack --skill antigravity-cli
+npx skills add makeavish/vstack --skill claude-cli
+npx skills add makeavish/vstack --skill chatgpt-pro
+npx skills add makeavish/vstack --skill codex
+npx skills add makeavish/vstack --skill codex-loop
+npx skills add makeavish/vstack --skill codex-plan-review
+npx skills add makeavish/vstack --skill cursor-cli
+npx skills add makeavish/vstack --skill leaving-pr-comments
+npx skills add makeavish/vstack --skill merge-ready
+npx skills add makeavish/vstack --skill modernize
+npx skills add makeavish/vstack --skill writing
 ```
 
 Some skills call others. When installing individually, install the ones they need too: `merge-ready` uses `codex-loop` and `leaving-pr-comments`, `modernize` uses `leaving-pr-comments`, and `codex-loop` uses `codex` outside T3 Code.
@@ -51,7 +51,7 @@ Some skills call others. When installing individually, install the ones they nee
 ### Claude Code
 
 ```sh
-/plugin marketplace add makeavish/agent-skills
+/plugin marketplace add makeavish/vstack
 /plugin install personal@makeavish-skills
 ```
 
@@ -67,7 +67,7 @@ To update after new releases:
 Add this repository as a Codex plugin marketplace, then install the plugin:
 
 ```sh
-codex plugin marketplace add makeavish/agent-skills
+codex plugin marketplace add makeavish/vstack
 codex plugin add personal@makeavish-skills
 ```
 
@@ -82,7 +82,7 @@ For difficult work, the skill calls for a focused Pro consultation after local i
 - **Claude Marketplace ID**: `makeavish-skills`
 - **Codex Marketplace ID**: `makeavish-skills`
 - **Plugin ID**: `personal`
-- **Repository**: `makeavish/agent-skills`
+- **Repository**: `makeavish/vstack`
 
 ## Repository Structure
 
