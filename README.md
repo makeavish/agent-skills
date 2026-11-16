@@ -20,8 +20,6 @@ Personal Codex and Claude Code agent skills for writing, plan review, Codex revi
 
 ## Installation
 
-Plugin version: **1.14.0**. Model guidance checked on **2026-10-01**; availability depends on the provider, account, and installed client. Explicit model selections are preserved.
-
 ### skills.sh
 
 Install all skills:
