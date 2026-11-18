@@ -9,9 +9,9 @@ Personal Codex and Claude Code agent skills for writing, plan review, Codex revi
 | [antigravity-cli](plugins/personal/skills/antigravity-cli/SKILL.md) | General-purpose Antigravity CLI runner (`agy`, Google's successor to Gemini CLI) — code analysis, refactoring, and automated editing with model/autonomy/sandbox selection. Recommends Gemini 3.8 Flash when available, validates exact model slugs with `agy models`, and supports JSON output on current builds. |
 | [claude-cli](plugins/personal/skills/claude-cli/SKILL.md) | General-purpose Claude Code CLI runner (`claude`, `claude -p`) — code analysis, refactoring, reviews, automated editing, background agents, and structured output. Covers Fable 5.1, Opus 5.5, Sonnet 5.5, and Haiku 4.5, with provider-specific alias guidance. Defaults to Opus; multiple Fable instances require explicit cost confirmation. |
 | [chatgpt-pro](plugins/personal/skills/chatgpt-pro/SKILL.md) | Consults GPT-6 Pro when requested or proactively for stalled hard problems and consequential reasoning decisions. Works with Codex, Claude Code, and other agents with browser UI tools; preserves practical outputs and cross-agent handoffs. Prefers the user's default browser where ChatGPT is already logged in. |
-| [codex](plugins/personal/skills/codex/SKILL.md) | General-purpose Codex CLI runner — code analysis, refactoring, and automated editing with model/effort/sandbox selection for GPT-6 Astra (`gpt-6-astra`), GPT-6.1 Sol (`gpt-6.1-sol`), and GPT-6 Luna (`gpt-6-luna`). Includes `max` effort and model-specific `ultra` support. |
+| [codex](plugins/personal/skills/codex/SKILL.md) | Runs Codex CLI for code analysis, refactoring, and editing. Choose GPT-6.2 Astra (`gpt-6.2-astra`), GPT-6.1 Sol (`gpt-6.1-sol`), or GPT-6 Luna (`gpt-6-luna`), along with sandbox mode and reasoning effort up to `max` or model-specific `ultra`. |
 | [codex-loop](plugins/personal/skills/codex-loop/SKILL.md) | Reviews a change with Codex in a loop until both agents agree: up to 3 rounds by default, a findings ledger, and the smallest fix for each real finding. Runs through T3 Code delegation or Codex CLI. |
-| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Iterative plan review loop — Claude sends the current plan to Codex, revises based on feedback, and re-submits until Codex approves (up to 5 rounds), with GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna model options. |
+| [codex-plan-review](plugins/personal/skills/codex-plan-review/SKILL.md) | Claude sends the current plan to Codex, revises it based on feedback, and resubmits it until Codex approves or reaches 5 rounds. Choose GPT-6.2 Astra, GPT-6.1 Sol, or GPT-6 Luna for the review. |
 | [cursor-cli](plugins/personal/skills/cursor-cli/SKILL.md) | General-purpose Cursor CLI runner (`agent`, `cursor-agent`) — code analysis, reviews, planning, refactoring, and automated editing with account-specific model discovery, ask/plan modes, permissions, structured output, and session resume. Suggests Composer, Muse, and Grok models; defaults to Composer. |
 | [leaving-pr-comments](plugins/personal/skills/leaving-pr-comments/SKILL.md) | Formats comments that an agent posts on GitHub on your behalf: an attribution callout, then a direct reply that leads with the conclusion. |
 | [merge-ready](plugins/personal/skills/merge-ready/SKILL.md) | Takes a change to a pull request with nobody watching: proves it, reviews it with `codex-loop`, files the PR, and babysits CI and review bots. Stops when the PR is ready for you to merge and never merges it. |
@@ -19,6 +19,8 @@ Personal Codex and Claude Code agent skills for writing, plan review, Codex revi
 | [writing](plugins/personal/skills/writing/SKILL.md) | Draft, rewrite, critique, or unblock human-facing prose while preserving facts, voice, and genre-specific intent. Includes a pass for headings, lists, titles, and other short items that readers scan as a set, and sentence tests for buried actions, stacked nouns, and empty sentences. |
 
 ## Installation
+
+Plugin version **1.14.1**.
 
 ### skills.sh
 
